@@ -383,10 +383,10 @@ def admin_product(product_id=0):
         code = "success"
         for productI in resAll:
               res.append(
-              {"product_id": productI.id, 
+              {"id": productI.id, 
               "pic": productI.pic,
-              "product_name": productI.name,
-              "product_brand": productI.brand_name,
+              "name": productI.name,
+              "brand_name": productI.brand_name,
               "price": productI.price,"product_sn": productI.product_sn,"publish_status": productI.publish_status,"new_status": productI.new_status,"recommand_status": productI.recommand_status,"verify_status": productI.verify_status,"sort": productI.sort,"sale": productI.sale}
               )
       else:
