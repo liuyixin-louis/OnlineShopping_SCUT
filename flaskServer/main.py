@@ -15,7 +15,6 @@ def test():
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    
     # if request.method=='GET':      
     #         return 'you send server a GET request'
     # else request.method=='POST':
@@ -65,10 +64,6 @@ def info(id):
     temp=userInfo_instance.get_userInfo(id)
     print(temp)
     return temp
-
-
-
-
 
 if __name__ == '__main__':
     app.run()
