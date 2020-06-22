@@ -367,7 +367,7 @@ def get_product(product_id):
     return jsonify({"code": 200, "res": res})
 
 
-@app.route("/admin/products/", methods=['GET'])
+@app.route("/admin/products/", methods=['GET',"POST"])
 @app.route("/admin/products/<int:product_id>", methods=['POST', 'PUT', 'delete'])
 def admin_product(product_id=0):
     # 数据库连接池、数据定义
@@ -435,3 +435,4 @@ def admin_product(product_id=0):
 if __name__ == '__main__':
     app.debug = True
     app.run(host='localhost', port=5000)
+    
