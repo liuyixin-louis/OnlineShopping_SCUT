@@ -387,7 +387,7 @@ def admin_product(product_id=0):
               "pic": productI.pic,
               "name": productI.name,
               "brand_name": productI.brand_name,
-              "price": productI.price,"product_sn": productI.product_sn,"publish_status": productI.publish_status,"new_status": productI.new_status,"recommand_status": productI.recommand_status,"verify_status": productI.verify_status,"sort": productI.sort,"sale": productI.sale}
+              "price": float(productI.price),"product_sn": productI.product_sn,"publish_status": productI.publish_status,"new_status": productI.new_status,"recommand_status": productI.recommand_status,"verify_status": productI.verify_status,"sort": productI.sort,"sale": productI.sale}
               )
       else:
         code = "fail"
