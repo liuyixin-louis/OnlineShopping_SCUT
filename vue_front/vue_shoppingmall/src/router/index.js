@@ -4,6 +4,8 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 import Cate from '../components/goods/Cate.vue'
 import Users from '../components/user/Users.vue'
+import List from '../components/goods/list.vue'
+import Add from '../components/goods/Add.vue'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -14,7 +16,9 @@ export default new Router({
       component: Home,
       children: [
         { path: '/categories', component: Cate },
-        { path: '/users', component: Users }
+        { path: '/users', component: Users },
+        { path: '/lists', component: List },
+        { path: '/lists/add', component: Add }
       ]
     }
 

@@ -21,12 +21,12 @@
         </el-col>
       </el-row>
       <!-- 用户列表区域 -->
-      <el-table :data="tableData" style="width: 100%" border>
+      <el-table :data="userlist" style="width: 100%" border>
         <el-table-column type="index">
         </el-table-column>
         <el-table-column prop="id" label="用户编号" width="180">
         </el-table-column>
-        <el-table-column prop="username" label="用户名" width="180">
+        <el-table-column prop="name" label="用户名" width="180">
         </el-table-column>
         <el-table-column prop="email" label="邮箱">
         </el-table-column>
@@ -48,6 +48,9 @@
 export default {
   data () {
     return {
+      userlist: [],
+      total: 0,
+      // 假数据
       tableData: [{
         id: '11',
         username: '王小虎',
@@ -66,9 +69,25 @@ export default {
         email: '4@qq.com'
       }]
     }
+  },
+  created () {
+    this.getUserList()
+  },
+  methods: {
+    async getUserList () {
+      const { data: res } = await this.$http.get('user')
+      console.log(res)
+      console.log(res.all_users_info)
+      this.userlist = res.all_users_info
+      this.total = res.all_users_info.length
+    }
   }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c28213c20d2a0d04d52ac384c7f86fb5d1b47051
 </script>
 <style lang="less" scoped>
 </style>
