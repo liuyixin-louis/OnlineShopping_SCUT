@@ -14,7 +14,7 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 # 初始化数据库连接:
 engine = create_engine(
-    'mysql+pymysql://root:zxczxcz123@localhost:3306/our_mall?charset=utf8')
+    'mysql+pymysql://root:JL728014jl@localhost:3306/comall?charset=utf8')
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
 # db = SQLAlchemy(app) #实例化
@@ -370,8 +370,8 @@ def get_product(product_id):
     return jsonify({"code": 200, "res": res})
 
 
-@app.route("/admin/products/", methods=['GET',"POST"])
-@app.route("/admin/products/<int:product_id>", methods=['GET','POST', 'PUT', 'delete'])
+@app.route("/admin/products/", methods=['GET', "POST"])
+@app.route("/admin/products/<int:product_id>", methods=['GET', 'POST', 'PUT', 'delete'])
 def admin_product(product_id=0):
     # 数据库连接池、数据定义
     s = DBSession()
@@ -399,6 +399,7 @@ def admin_product(product_id=0):
 
     # 添加商品
     if request.method == 'POST':
+        print(request.form)
         id = request.form['id']
         pic = request.form['pic']
         name = request.form['name']
@@ -421,6 +422,7 @@ def admin_product(product_id=0):
         # 更新商品
     if request.method == 'PUT':
         # 查询并更新
+        print('debug')
         print(dict(request.form))
         s.query(PmsProduct).filter(PmsProduct.id ==
                                    product_id).update(dict(request.form))
@@ -436,6 +438,19 @@ def admin_product(product_id=0):
         s.commit()
         s.close()
         return jsonify({"code": "sucess", "res": ""})
+
+
+@app.route("/admin/products/edit/<int:product_id>", methods=["POST"])
+def product_edit(product_id):
+    # 查询并更新
+    s = DBSession()
+    print('debug')
+    print(dict(request.form))
+    s.query(PmsProduct).filter_by(id=product_id).update(dict(request.form))
+    # commit
+    s.commit()
+    s.close()
+    return jsonify({"code": "sucess", "res": ""})
 
 
 if __name__ == '__main__':
