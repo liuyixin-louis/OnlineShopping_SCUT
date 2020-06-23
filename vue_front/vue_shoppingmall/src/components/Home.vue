@@ -79,7 +79,7 @@
               <span>商品管理</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="3-1" @click="saveNavState('/3-1')">
+            <el-menu-item index="lists" @click="saveNavState('/3-1')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->

@@ -17,12 +17,17 @@
     </el-card>
 
     <!-- 表格-->
-    <tree-table :data="data" :columns="columns" :selection-type="false" :expand-type="false" :show-index="true">
+    <tree-table :data="catelist" :columns="columns" :selection-type="false" :expand-type="false" show-index border>
       <!-- 排序 -->
       <template slot="order" slot-scope="scope">
         <el-tag size="mini" v-if="scope.row.cat_level==0">一级</el-tag>
         <el-tag type="success" size="mini" v-else-if="scope.row.cat_level==1">二级</el-tag>
         <el-tag type="warning" size="mini" v-else>三级</el-tag>
+      </template>
+      <!-- 操作 -->
+      <template slot="opt">
+        <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+        <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
       </template>
     </tree-table>
   </div>
@@ -32,177 +37,30 @@
 export default {
   data () {
     return {
-      data: [
-        {
-          name: 'Jack',
-          sex: 'male',
-          likes: ['football', 'basketball'],
-          score: 10,
-          children: [
-            {
-              name: 'Ashley',
-              sex: 'female',
-              likes: ['football', 'basketball'],
-              score: 20,
-              children: [
-                {
-                  name: 'Ashley',
-                  sex: 'female',
-                  likes: ['football', 'basketball'],
-                  score: 20
-                },
-                {
-                  name: 'Taki',
-                  sex: 'male',
-                  likes: ['football', 'basketball'],
-                  score: 10,
-                  children: [
-                    {
-                      name: 'Ashley',
-                      sex: 'female',
-                      likes: ['football', 'basketball'],
-                      score: 20
-                    },
-                    {
-                      name: 'Taki',
-                      sex: 'male',
-                      likes: ['football', 'basketball'],
-                      score: 10,
-                      children: [
-                        {
-                          name: 'Ashley',
-                          sex: 'female',
-                          likes: ['football', 'basketball'],
-                          score: 20
-                        },
-                        {
-                          name: 'Taki',
-                          sex: 'male',
-                          likes: ['football', 'basketball'],
-                          score: 10
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              name: 'Taki',
-              sex: 'male',
-              likes: ['football', 'basketball'],
-              score: 10
-            }
-          ]
-        },
-        {
-          name: 'Tom',
-          sex: 'male',
-          likes: ['football', 'basketball'],
-          score: 20,
-          children: [
-            {
-              name: 'Ashley',
-              sex: 'female',
-              likes: ['football', 'basketball'],
-              score: 20,
-              children: [
-                {
-                  name: 'Ashley',
-                  sex: 'female',
-                  likes: ['football', 'basketball'],
-                  score: 20
-                },
-                {
-                  name: 'Taki',
-                  sex: 'male',
-                  likes: ['football', 'basketball'],
-                  score: 10
-                }
-              ]
-            },
-            {
-              name: 'Taki',
-              sex: 'male',
-              likes: ['football', 'basketball'],
-              score: 10,
-              children: [
-                {
-                  name: 'Ashley',
-                  sex: 'female',
-                  likes: ['football', 'basketball'],
-                  score: 20
-                },
-                {
-                  name: 'Taki',
-                  sex: 'male',
-                  likes: ['football', 'basketball'],
-                  score: 10
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: 'Tom',
-          sex: 'male',
-          likes: ['football', 'basketball'],
-          score: 20
-        },
-        {
-          name: 'Tom',
-          sex: 'male',
-          likes: ['football', 'basketball'],
-          score: 20,
-          children: [
-            {
-              name: 'Ashley',
-              sex: 'female',
-              likes: ['football', 'basketball'],
-              score: 20
-            },
-            {
-              name: 'Taki',
-              sex: 'male',
-              likes: ['football', 'basketball'],
-              score: 10
-            }
-          ]
-        }
-      ],
-      columns: [
-        {
-          label: 'name',
-          prop: 'name',
-          width: '400px'
-        },
-        {
-          label: 'sex',
-          prop: 'sex',
-          minWidth: '50px'
-        },
-        {
-          label: 'score',
-          prop: 'score'
-        },
-        {
-          label: 'likes',
-          prop: 'likes',
-          minWidth: '200px',
-          type: 'template',
-          template: 'likes'
-        },
-        {
-          label: '排序',
-          // 将当前列定义为模版列
-          type: 'template',
-          template: 'order'
-        }
-      ]
+      columns: [{
+        label: '分类名称',
+        prop: 'title'
+      },
+      {
+        label: '操作',
+        type: 'template',
+        template: 'opt'
+      }],
+      catelist: [],
+      total: 0
     }
   },
-  created () { },
-  methods: {}
+  created () { this.getCateList() },
+  methods: {
+    async getCateList () {
+      const { data: res } = await this.$http.get('get_category')
+      console.log(res)
+      console.log(res.res)
+      this.catelist = res.res
+      this.total = res.res.length
+      //  this.total = res.res.length
+    }
+  }
 }
 
 </script>
