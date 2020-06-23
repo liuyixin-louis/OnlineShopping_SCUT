@@ -479,8 +479,8 @@ def admin_product(product_id=0):
     if request.method == 'PUT':
         # 查询并更新
         # print('debug')
-        print(dict(request.json))
-        s.query(PmsProduct).filter(PmsProduct.id==product_id).update(dict(request.json))
+        print(dict(request.form))
+        s.query(PmsProduct).filter(PmsProduct.id==product_id).update(dict(request.form))
         # commit
         s.commit()
         s.close()
