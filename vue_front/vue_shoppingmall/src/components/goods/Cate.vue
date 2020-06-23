@@ -53,7 +53,7 @@ export default {
   created () { this.getCateList() },
   methods: {
     async getCateList () {
-      const { data: res } = await this.$http.get('get_category')
+      const { data: res } = await this.$http.get('admin/get_category')
       console.log(res)
       console.log(res.res)
       this.catelist = res.res
