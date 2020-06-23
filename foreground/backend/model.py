@@ -21,8 +21,7 @@ class PmsBrand(Base):
     product_count = Column(INTEGER(11), comment='产品数量')
     product_comment_count = Column(INTEGER(11), comment='产品评论数量')
     logo = Column(VARCHAR(255), comment='品牌logo')
-    big_pic = Column(VARCHAR(255), comment='专区大图')
-    brand_story = Column(TEXT, comment='品牌故事')
+    description = Column(VARCHAR(255), comment='介绍')
 
 
 class PmsFeightTemplate(Base):
@@ -32,7 +31,7 @@ class PmsFeightTemplate(Base):
     id = Column(BIGINT(20), primary_key=True)
     name = Column(VARCHAR(64))
     charge_type = Column(INTEGER(11), comment='计费类型:0->按重量；1->按件数')
-    first_weight = Column(DECIMAL(10, 2), comment='首重kg')
+    first_weight = Column(DECIMAL(10, 2), nullable=False, comment='首重kg')
     first_fee = Column(DECIMAL(10, 2), comment='首费（元）')
     continue_weight = Column(DECIMAL(10, 2))
     continme_fee = Column(DECIMAL(10, 2))
@@ -127,8 +126,7 @@ class OmsOrder(Base):
     freight_amount = Column(DECIMAL(10, 2), comment='运费金额')
     pay_type = Column(INTEGER(11), comment='支付方式：0->未支付；1->支付宝；2->微信')
     source_type = Column(INTEGER(11), comment='订单来源：0->PC订单；1->app订单')
-    status = Column(INTEGER(11), comment='订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单')
-    order_type = Column(INTEGER(11), comment='订单类型：0->正常订单；1->秒杀订单')
+    status = Column(INTEGER(11), comment='订单状态：1->待付款；2->待发货；3->已发货；4->待评价；5->已评价；6->已关闭')
     delivery_company = Column(VARCHAR(64), comment='物流公司(配送方式)')
     delivery_sn = Column(VARCHAR(64), comment='物流单号')
     receiver_name = Column(VARCHAR(100), nullable=False, comment='收货人姓名')
@@ -145,7 +143,6 @@ class OmsOrder(Base):
     delivery_time = Column(DateTime, comment='发货时间')
     receive_time = Column(DateTime, comment='确认收货时间')
     comment_time = Column(DateTime, comment='评价时间')
-    modify_time = Column(DateTime, comment='修改时间')
 
     member = relationship('UmsMember')
 
@@ -217,18 +214,6 @@ class PmsProductAttribute(Base):
     product_attribute_category = relationship('PmsProductAttributeCategory')
 
 
-class PmsProductCategoryAttributeRelation(Base):
-    __tablename__ = 'pms_product_category_attribute_relation'
-    __table_args__ = {'comment': '产品的分类和属性的关系表，用于设置分类筛选条件（只支持一级分类）'}
-
-    id = Column(BIGINT(20), primary_key=True)
-    product_category_id = Column(ForeignKey('pms_product_category.id'), index=True)
-    product_attribute_id = Column(ForeignKey('pms_product_attribute_category.id', ondelete='RESTRICT', onupdate='RESTRICT'), index=True)
-
-    product_attribute = relationship('PmsProductAttributeCategory')
-    product_category = relationship('PmsProductCategory')
-
-
 class UmsMemberReceiveAddres(Base):
     __tablename__ = 'ums_member_receive_address'
     __table_args__ = {'comment': '会员收货地址表'}
@@ -237,7 +222,7 @@ class UmsMemberReceiveAddres(Base):
     member_id = Column(ForeignKey('ums_member.id'), index=True)
     name = Column(VARCHAR(100), comment='收货人名称')
     phone_number = Column(VARCHAR(64))
-    default_status = Column(INTEGER(11), comment='是否为默认')
+    default_status = Column(SMALLINT(1), comment='是否为默认')
     post_code = Column(VARCHAR(100), comment='邮政编码')
     province = Column(VARCHAR(100), comment='省份/直辖市')
     city = Column(VARCHAR(100), comment='城市')
@@ -255,17 +240,11 @@ class UmsMemberStatisticsInfo(Base):
     member_id = Column(ForeignKey('ums_member.id'), index=True)
     consume_amount = Column(DECIMAL(10, 2), comment='累计消费金额')
     order_count = Column(INTEGER(11), comment='订单数量')
-    coupon_count = Column(INTEGER(11), comment='优惠券数量')
     comment_count = Column(INTEGER(11), comment='评价数')
     return_order_count = Column(INTEGER(11), comment='退货数量')
     login_count = Column(INTEGER(11), comment='登录次数')
     attend_count = Column(INTEGER(11), comment='关注数量')
     fans_count = Column(INTEGER(11), comment='粉丝数量')
-    collect_product_count = Column(INTEGER(11))
-    collect_subject_count = Column(INTEGER(11))
-    collect_topic_count = Column(INTEGER(11))
-    collect_comment_count = Column(INTEGER(11))
-    invite_friend_count = Column(INTEGER(11))
     recent_order_time = Column(DateTime, comment='最后一次下订单时间')
 
     member = relationship('UmsMember')
@@ -293,6 +272,8 @@ class OmsCartItem(Base):
     product_brand = Column(ForeignKey('pms_brand.id'), index=True)
     product_sn = Column(VARCHAR(200))
     product_attr = Column(VARCHAR(500), comment='商品销售属性:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]')
+    max_number = Column(INTEGER(11))
+    checked = Column(SMALLINT(1))
 
     member = relationship('UmsMember')
     pms_brand = relationship('PmsBrand')
@@ -359,19 +340,30 @@ class PmsProductAttributeValue(Base):
     product = relationship('PmsProduct')
 
 
+class PmsProductCategoryAttributeRelation(Base):
+    __tablename__ = 'pms_product_category_attribute_relation'
+    __table_args__ = {'comment': '产品的分类和属性的关系表，用于设置分类筛选条件（只支持一级分类）'}
+
+    id = Column(BIGINT(20), primary_key=True)
+    product_category_id = Column(ForeignKey('pms_product_category.id'), index=True)
+    product_attribute_id = Column(ForeignKey('pms_product_attribute.id'), index=True)
+
+    product_attribute = relationship('PmsProductAttribute')
+    product_category = relationship('PmsProductCategory')
+
+
 class PmsSkuStock(Base):
     __tablename__ = 'pms_sku_stock'
     __table_args__ = {'comment': 'sku的库存'}
 
-    id = Column(BIGINT(20), primary_key=True)
+    id = Column(BIGINT(20), primary_key=True, nullable=False)
     product_id = Column(ForeignKey('pms_product.id'), index=True)
-    sku_code = Column(VARCHAR(64), nullable=False, comment='sku编码')
+    sku_code = Column(VARCHAR(64), primary_key=True, nullable=False, comment='sku编码')
     price = Column(DECIMAL(10, 2))
     stock = Column(INTEGER(11), server_default=text("'0'"), comment='库存')
     low_stock = Column(INTEGER(11), comment='预警库存')
     pic = Column(VARCHAR(255), comment='展示图片')
     sale = Column(INTEGER(11), comment='销量')
-    lock_stock = Column(INTEGER(11), server_default=text("'0'"), comment='锁定库存')
     sp_data = Column(VARCHAR(500), comment='商品销售属性，json格式')
 
     product = relationship('PmsProduct')

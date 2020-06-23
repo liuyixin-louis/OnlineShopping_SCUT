@@ -4,6 +4,8 @@ from sqlalchemy import create_engine, Integer
 from sqlalchemy.orm import sessionmaker
 from model import *
 from flask_sqlalchemy import SQLAlchemy
+from config import mysql_path
+
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = '123456'
@@ -13,8 +15,7 @@ app = Flask(__name__)
 # 解决跨域问题
 CORS(app, supports_credentials=True)
 # 初始化数据库连接:
-engine = create_engine(
-    'mysql+pymysql://root:zxczxcz123@localhost:3306/our_mall?charset=utf8')
+engine = create_engine(mysql_path)
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
 # db = SQLAlchemy(app) #实例化
@@ -88,27 +89,47 @@ def get_hot():
 
 @app.route("/get_category")
 def get_category():
-    res = [{"id": 1, "title": "服装", "children": [
-        {
-            "id": 2, "title": "内裤", "picUrl": "https://yanxuan.nosdn.127.net/8f8e33740f959f78228ea66ded5a2d34.png"
-        },
-        {
-            "id": 3, "title": "内衣", "picUrl": "https://yanxuan.nosdn.127.net/cd9abb6017e8d0c31d04a6e93fa16c4d.png"
-        },
-        {
-            "id": 4, "title": "袜子", "picUrl": "https://yanxuan.nosdn.127.net/c34360cc88e0f086676680591b737d06.png"
-        },
-        {
-            "id": 5, "title": "T恤", "picUrl": "https://yanxuan.nosdn.127.net/f79dc8718c0f42c3736138e2205ce6ad.png"
-        }
-    ]}, {"id": 6, "title": "餐厨", "children": [
-        {
-            "id": 7, "title": "锅具", "picUrl": "https://yanxuan.nosdn.127.net/b5cb8e8abc7d7dd20711de9bf4c2f3fa.png"
-        },
-        {
-            "id": 8, "title": "杯壶", "picUrl": "https://yanxuan.nosdn.127.net/7b39e972b2905741b50946463a8c75d0.png"
-        }
-    ]}]
+    # s = DBSession()
+    # # 查所有的分类
+    # resAll = s.query(PmsProductCategory).all()
+
+    # res = {}
+    # # nav_status & show_status 都不为0的时候
+    # for ri in resAll:
+    #   if(ri.nav_status and ri.show_status):
+    #     # 判断分级，level为1的则在列表中新插入一个字典；为2的在对应children列表中插入
+    #     if(ri.level==1):
+    #       res[ri.id] = {"id": ri.id, "title": ri.name, "children":[]}
+    #     if(ri.level==2):
+    #       res[ri.parent_id]["children"].append({"id": ri.id, "title": ri.name, "picUrl":ri.icon})
+    # # 把字典里面的每一个值存放出来
+    # res = list(res.values)
+    # s.close()
+    res = db_get_category()
+    print(res)
+    # return jsonify
+
+    # res = [{"id": 1, "title": "服装", "children": [
+    #     {
+    #         "id": 2, "title": "内裤", "picUrl": "https://yanxuan.nosdn.127.net/8f8e33740f959f78228ea66ded5a2d34.png"
+    #     },
+    #     {
+    #         "id": 3, "title": "内衣", "picUrl": "https://yanxuan.nosdn.127.net/cd9abb6017e8d0c31d04a6e93fa16c4d.png"
+    #     },
+    #     {
+    #         "id": 4, "title": "袜子", "picUrl": "https://yanxuan.nosdn.127.net/c34360cc88e0f086676680591b737d06.png"
+    #     },
+    #     {
+    #         "id": 5, "title": "T恤", "picUrl": "https://yanxuan.nosdn.127.net/f79dc8718c0f42c3736138e2205ce6ad.png"
+    #     }
+    # ]}, {"id": 6, "title": "餐厨", "children": [
+    #     {
+    #         "id": 7, "title": "锅具", "picUrl": "https://yanxuan.nosdn.127.net/b5cb8e8abc7d7dd20711de9bf4c2f3fa.png"
+    #     },
+    #     {
+    #         "id": 8, "title": "杯壶", "picUrl": "https://yanxuan.nosdn.127.net/7b39e972b2905741b50946463a8c75d0.png"
+    #     }
+    # ]}]
     res = {"code": 200, "res": res}
     return jsonify(res)
 
@@ -116,35 +137,66 @@ def get_category():
 @app.route("/add_cart", methods=['POST'])
 def add_cart():
     print(request.form)
+    # id = request.form['id']
+    s = DBSession()
+    id = request.form['id']
+    checked = request.form['checked']
+    picUrl = request.form['picUrl']
+    title = request.form['title']
+    spec = request.form['spec']
+    count = request.form['count']
+    maxNum = request.form['maxNum']
+    price = request.form['price']
+    new_cart_item = OmsCartItem()
+    s.add(new_product)
+    s.commit()
+    s.close()
+    return  jsonify({"code":"sucess","res":""})
     # insert into 对应用户的购物车表中
     # print(request.form['order_id'])
-    res = {"code": 200}
-    return jsonify(res)
+    # res = {"code": 200}
+    # return jsonify(res)
 
 
 @app.route("/query_cart", methods=['POST'])
 def query_cart():
+    userID = request.form['user_id']
     print("用户"+request.form['user_id']+"正在查询他的购物车信息！")
-    res = [{
-        "id": 1,
-        "checked": False,
-        "picUrl": 'https://resource.smartisan.com/resource/71432ad30288fb860a4389881069b874.png',
-        "title": '畅呼吸智能空气净化器',
-        "spec": '标准版 白色',
-        "count": 1,
-        "maxNum": 99,
-        "price": 1299.00
-    },
-        {
-        "id": 2,
-        "checked": True,
-        "picUrl": 'https://yanxuan.nosdn.127.net/e9cecc7cb24a8d7745da1c99b87dde08.png',
-        "title": '丛林系列·缝线笔记本 4本装',
-        "spec": '丛林系列',
-        "count": 1,
-        "maxNum": 99,
-        "price": 29.00
-    }]
+    s = DBSession()
+    r = s.query(OmsCartItem).filter(OmsCartItem.member_id == userID).all()
+    res = []
+    for ri in r:
+      res.append({
+        "id": ri.id,
+        "checked": ri.checked,
+        "picUrl": ri.product_pic,
+        "title": ri.product_name,
+        "spec": ri.product_attr,
+        "count": ri.quantity,
+        "maxNum": ri.max_number,
+        "price": ri.price
+      })
+    print(res)
+    # res = [{
+    #     "id": 1,
+    #     "checked": False,
+    #     "picUrl": 'https://resource.smartisan.com/resource/71432ad30288fb860a4389881069b874.png',
+    #     "title": '畅呼吸智能空气净化器',
+    #     "spec": '标准版 白色',
+    #     "count": 1,
+    #     "maxNum": 99,
+    #     "price": 1299.00
+    # },
+    #     {
+    #     "id": 2,
+    #     "checked": True,
+    #     "picUrl": 'https://yanxuan.nosdn.127.net/e9cecc7cb24a8d7745da1c99b87dde08.png',
+    #     "title": '丛林系列·缝线笔记本 4本装',
+    #     "spec": '丛林系列',
+    #     "count": 1,
+    #     "maxNum": 99,
+    #     "price": 29.00
+    # }]
     res = {"code": 200, "res": res}
     return jsonify(res)
 
@@ -370,8 +422,8 @@ def get_product(product_id):
     return jsonify({"code": 200, "res": res})
 
 
-@app.route("/admin/products/", methods=['GET',"POST"])
-@app.route("/admin/products/<int:product_id>", methods=['GET','POST', 'PUT', 'delete'])
+@app.route("/admin/products/", methods=['GET', "POST"])
+@app.route("/admin/products/<int:product_id>", methods=['GET', 'POST', 'PUT', 'delete'])
 def admin_product(product_id=0):
     # 数据库连接池、数据定义
     s = DBSession()
