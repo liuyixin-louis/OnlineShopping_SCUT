@@ -91,6 +91,33 @@ def get_hot():
     return jsonify(res)
 
 
+@app.route('/admin/get_category')
+def admin_get_category():
+    res = [{"id": 1, "title": "服装", "children": [
+    {
+        "id": 2, "title": "内裤", "picUrl": "https://yanxuan.nosdn.127.net/8f8e33740f959f78228ea66ded5a2d34.png"
+    },
+    {
+        "id": 3, "title": "内衣", "picUrl": "https://yanxuan.nosdn.127.net/cd9abb6017e8d0c31d04a6e93fa16c4d.png"
+    },
+    {
+        "id": 4, "title": "袜子", "picUrl": "https://yanxuan.nosdn.127.net/c34360cc88e0f086676680591b737d06.png"
+    },
+    {
+        "id": 5, "title": "T恤", "picUrl": "https://yanxuan.nosdn.127.net/f79dc8718c0f42c3736138e2205ce6ad.png"
+    }
+    ]}, {"id": 6, "title": "餐厨", "children": [
+    {
+        "id": 7, "title": "锅具", "picUrl": "https://yanxuan.nosdn.127.net/b5cb8e8abc7d7dd20711de9bf4c2f3fa.png"
+    },
+    {
+        "id": 8, "title": "杯壶", "picUrl": "https://yanxuan.nosdn.127.net/7b39e972b2905741b50946463a8c75d0.png"
+    }
+    ]}]
+    res = {"code": 200, "res": res}
+    return jsonify(res)
+
+
 @app.route("/get_category")
 def get_category():
     # s = DBSession()
