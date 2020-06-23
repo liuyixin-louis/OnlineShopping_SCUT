@@ -22,6 +22,10 @@ DBSession = sessionmaker(bind=engine)
 # s = DBSession()
 
 
+import json 
+
+
+
 def db_get_banner():
     s = DBSession()
     resAll = s.query(SmsFontbanner).all()
@@ -474,10 +478,9 @@ def admin_product(product_id=0):
         # 更新商品
     if request.method == 'PUT':
         # 查询并更新
-        print('debug')
-        print(dict(request.form))
-        s.query(PmsProduct).filter(PmsProduct.id ==
-                                   product_id).update(dict(request.form))
+        # print('debug')
+        print(dict(request.json))
+        s.query(PmsProduct).filter(PmsProduct.id==product_id).update(dict(request.json))
         # commit
         s.commit()
         s.close()
@@ -492,17 +495,7 @@ def admin_product(product_id=0):
         return jsonify({"code": "sucess", "res": ""})
 
 
-@app.route("/admin/products/edit/<int:product_id>", methods=["POST"])
-def product_edit(product_id):
-    # 查询并更新
-    s = DBSession()
-    print('debug')
-    print(dict(request.form))
-    s.query(PmsProduct).filter_by(id=product_id).update(dict(request.form))
-    # commit
-    s.commit()
-    s.close()
-    return jsonify({"code": "sucess", "res": ""})
+
 
 
 if __name__ == '__main__':
