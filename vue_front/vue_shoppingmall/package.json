@@ -33,5 +33,9 @@
     "less-loader": "^6.1.0",
     "vue-cli-plugin-element": "^1.0.1",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "main": ".eslintrc.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
