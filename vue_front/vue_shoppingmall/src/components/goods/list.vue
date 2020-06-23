@@ -79,6 +79,8 @@
 </template>
 
 <script>
+// 导入qs包
+import qs from 'qs'
 export default {
   data () {
     return {
@@ -156,7 +158,7 @@ export default {
           return this.$message.error('请填写必要的表单项！')
         }
         console.log(this.editForm)
-        const { data: res } = await this.$http.post('admin/products/edit/' + this.editForm.product_id, this.editForm)
+        const { data: res } = await this.$http.post('admin/products/edit/' + this.editForm.product_id, qs.stringify(this.editForm))
         console.log(res)
         this.editDialogVisible = false
         this.getGoodsList()
