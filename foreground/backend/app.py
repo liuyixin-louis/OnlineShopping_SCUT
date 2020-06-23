@@ -5,8 +5,8 @@ from sqlalchemy import create_engine, Integer
 from sqlalchemy.orm import sessionmaker
 from model import *
 from flask_sqlalchemy import SQLAlchemy
-from config_kk import mysql_path
-
+# from config_kk import mysql_path
+from config import mysql_path
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = '123456'
@@ -16,6 +16,7 @@ app = Flask(__name__)
 # 解决跨域问题
 CORS(app, supports_credentials=True)
 # 初始化数据库连接:
+# print("config:",mysql_path)
 engine = create_engine(mysql_path)
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
@@ -457,7 +458,6 @@ def admin_product(product_id=0):
     s = DBSession()
 
     # 判断请求类型
-
     # 查询商品
     if request.method == 'GET':
         resAll = s.query(PmsProduct).all()
@@ -519,6 +519,28 @@ def admin_product(product_id=0):
         s.close()
         return jsonify({"code": "sucess", "res": ""})
 
+@app.route('/signin', methods=['GET','POST'])
+def signin():
+    username = request.form['username']
+    password = request.form['password']
+    if (username == '6666' or username=='admin') and (password == '123456'or password == '6666'):
+        return dict(state=True)
+    else:
+        return dict(state=False)
+
+
+# 注册 sign up
+@app.route('/signup', methods=['POST'])
+def signup():
+    userid = request.form['id']
+    name = request.form['username']
+    email = request.form['email']
+    u = User(userid,name, email)
+    db_session.add(u)
+    # db_session.commit()
+    # return render_template('signup-ok.html', username=name)
+    return dict(method='get',id='1',username='yanhao',email='123456',status='success')
+    # dict(method='get',id='1',username='yanhao',email='123456',status='fail')
 
 if __name__ == '__main__':
     app.debug = True
