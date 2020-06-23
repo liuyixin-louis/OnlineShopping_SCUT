@@ -45,7 +45,7 @@
         </el-table-column>
       </el-table>
       <!-- 修改用户对话框 -->
-      <el-dialog title="修改商品" :visible.sync="editDialogVisible" width="50%">
+      <el-dialog title="修改商品" :visible.sync="editDialogVisible" width="50%" @click="editDialogClosed">
         <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
           <el-form-item label="商品编号">
             <el-input v-model="editForm.product_id" disabled></el-input>
@@ -65,7 +65,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="editDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="editUserInfo">确 定</el-button>
         </span>
       </el-dialog>
       <!-- 分页 -->
@@ -138,10 +138,21 @@ export default {
       //  const { data: res } = await this.$http.get(`admin/products/${id}`)
       // this.editForm=res.data
       this.editDialogVisible = true
+    },
+    // 监听修改用户对话框的关闭事件
+    editDialogClosed () {
+      this.$refs.editFormRef.resetFields()
+    },
+    // 修改用户并提交
+    editUserInfo () {
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) {
+          return this.$message.error('请填写必要的表单项！')
+        }
+      })
     }
   }
 }
-
 </script>
 <style lang="less" scoped>
 </style>
