@@ -37,13 +37,37 @@
         <el-table-column label="操作">
           <!-- 操作 -->
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+            <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.product_id)">编辑
+            </el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeById(scope.row.product_id)">删除
             </el-button>
           </template>
         </el-table-column>
       </el-table>
-
+      <!-- 修改用户对话框 -->
+      <el-dialog title="修改商品" :visible.sync="editDialogVisible" width="50%">
+        <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+          <el-form-item label="商品编号">
+            <el-input v-model="editForm.product_id" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="商品名称">
+            <el-input v-model="editForm.product_name" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="品牌">
+            <el-input v-model="editForm.product_brand" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="价格" prop="price">
+            <el-input v-model="editForm.price"></el-input>
+          </el-form-item>
+          <el-form-item label="销量" prop="sale">
+            <el-input v-model="editForm.sale"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
       <!-- 分页 -->
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
         :current-page="queryInfo.pagenum" :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pagesize"
@@ -64,7 +88,19 @@ export default {
         pagesize: 10
       },
       goodslist: [],
-      total: 0
+      total: 0,
+      editDialogVisible: false, // 控制修改商品对话框的显示与隐藏
+      editForm: {}, // 保存查询到的用户信息
+      // 修改表单的验证规则对象,但没有验证两者必须为数值
+      editFormRules: {
+        price: [{
+          required: true, message: '请输入商品价格', trigger: 'blur'
+        }],
+        sale: [{
+          required: true, message: '请输入商品销量', trigger: 'blur'
+        }
+        ]
+      }
     }
   },
   created () {
@@ -95,6 +131,13 @@ export default {
     },
     goAddpage () {
       this.$router.push('/add')
+    },
+    // 展示修改对话框
+    showEditDialog (id) {
+      // 未完成/admin/products/<int:product_id>的GET接口
+      //  const { data: res } = await this.$http.get(`admin/products/${id}`)
+      // this.editForm=res.data
+      this.editDialogVisible = true
     }
   }
 }
