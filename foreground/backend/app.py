@@ -451,6 +451,7 @@ def admin_product(product_id=0):
 
     # 添加商品
     if request.method == 'POST':
+        print(request.form)
         id = request.form['id']
         pic = request.form['pic']
         name = request.form['name']
@@ -473,6 +474,7 @@ def admin_product(product_id=0):
         # 更新商品
     if request.method == 'PUT':
         # 查询并更新
+        print('debug')
         print(dict(request.form))
         s.query(PmsProduct).filter(PmsProduct.id ==
                                    product_id).update(dict(request.form))
@@ -488,6 +490,19 @@ def admin_product(product_id=0):
         s.commit()
         s.close()
         return jsonify({"code": "sucess", "res": ""})
+
+
+@app.route("/admin/products/edit/<int:product_id>", methods=["POST"])
+def product_edit(product_id):
+    # 查询并更新
+    s = DBSession()
+    print('debug')
+    print(dict(request.form))
+    s.query(PmsProduct).filter_by(id=product_id).update(dict(request.form))
+    # commit
+    s.commit()
+    s.close()
+    return jsonify({"code": "sucess", "res": ""})
 
 
 if __name__ == '__main__':

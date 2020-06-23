@@ -133,22 +133,34 @@ export default {
       this.$router.push('/add')
     },
     // 展示修改对话框
-    showEditDialog (id) {
+    async showEditDialog (id) {
       // 未完成/admin/products/<int:product_id>的GET接口
       //  const { data: res } = await this.$http.get(`admin/products/${id}`)
-      // this.editForm=res.data
+      //  console.log(res)
+      //  this.editForm = res.data
+      console.log(this.goodslist)
+      console.log(this.total)
+      for (var i = 0; i < this.total; i++) {
+        if (this.goodslist[i].product_id === id) { this.editForm = this.goodslist[i] }
+      }
       this.editDialogVisible = true
     },
     // 监听修改用户对话框的关闭事件
     editDialogClosed () {
       this.$refs.editFormRef.resetFields()
     },
-    // 修改用户并提交
+    // 修改并提交
     editUserInfo () {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) {
           return this.$message.error('请填写必要的表单项！')
         }
+        console.log(this.editForm)
+        const { data: res } = await this.$http.post('admin/products/edit/' + this.editForm.product_id, this.editForm)
+        console.log(res)
+        this.editDialogVisible = false
+        this.getGoodsList()
+        this.$message.success('更新用户信息成功！')
       })
     }
   }
