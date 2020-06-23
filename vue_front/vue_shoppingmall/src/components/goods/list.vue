@@ -24,11 +24,11 @@
       <el-table :data="goodslist" style="width: 100%" border>
         <el-table-column type="index">
         </el-table-column>
-        <el-table-column prop="product_id" label="商品编号">
+        <el-table-column prop="id" label="商品编号">
         </el-table-column>
-        <el-table-column prop="product_name" label="商品名称" width="120">
+        <el-table-column prop="name" label="商品名称" width="120">
         </el-table-column>
-        <el-table-column prop="product_brand" label="品牌">
+        <el-table-column prop="brand_name" label="品牌">
         </el-table-column>
         <el-table-column prop="price" label="价格">
         </el-table-column>
@@ -37,9 +37,9 @@
         <el-table-column label="操作">
           <!-- 操作 -->
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.product_id)">编辑
+            <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)">编辑
             </el-button>
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeById(scope.row.product_id)">删除
+            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeById(scope.row.id)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -48,13 +48,13 @@
       <el-dialog title="修改商品" :visible.sync="editDialogVisible" width="50%" @click="editDialogClosed">
         <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
           <el-form-item label="商品编号">
-            <el-input v-model="editForm.product_id" disabled></el-input>
+            <el-input v-model="editForm.id" disabled></el-input>
           </el-form-item>
           <el-form-item label="商品名称">
-            <el-input v-model="editForm.product_name" disabled></el-input>
+            <el-input v-model="editForm.name" disabled></el-input>
           </el-form-item>
           <el-form-item label="品牌">
-            <el-input v-model="editForm.product_brand" disabled></el-input>
+            <el-input v-model="editForm.brand_name" disabled></el-input>
           </el-form-item>
           <el-form-item label="价格" prop="price">
             <el-input v-model="editForm.price"></el-input>
@@ -143,7 +143,7 @@ export default {
       console.log(this.goodslist)
       console.log(this.total)
       for (var i = 0; i < this.total; i++) {
-        if (this.goodslist[i].product_id === id) { this.editForm = this.goodslist[i] }
+        if (this.goodslist[i].id === id) { this.editForm = this.goodslist[i] }
       }
       this.editDialogVisible = true
     },
@@ -158,7 +158,8 @@ export default {
           return this.$message.error('请填写必要的表单项！')
         }
         console.log(this.editForm)
-        const { data: res } = await this.$http.put('admin/products/' + this.editForm.product_id, qs.stringify(this.editForm))
+        const { data: res } = await this.$http.put('admin/products/' + this.editForm.id, qs.stringify(this.editForm))
+        //  const { data: res } = await this.$http.post('admin/products/', qs.stringify(this.editForm))
         console.log(res)
         this.editDialogVisible = false
         this.getGoodsList()

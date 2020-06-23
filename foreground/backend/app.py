@@ -1,10 +1,11 @@
+import json
 from flask import Flask, jsonify, session, request
 from flask_cors import *            # 解决跨域问题
 from sqlalchemy import create_engine, Integer
 from sqlalchemy.orm import sessionmaker
 from model import *
 from flask_sqlalchemy import SQLAlchemy
-from config import mysql_path
+from config_kk import mysql_path
 
 
 app = Flask(__name__)
@@ -20,10 +21,6 @@ engine = create_engine(mysql_path)
 DBSession = sessionmaker(bind=engine)
 # db = SQLAlchemy(app) #实例化
 # s = DBSession()
-
-
-import json 
-
 
 
 def db_get_banner():
@@ -155,7 +152,7 @@ def add_cart():
     s.add(new_product)
     s.commit()
     s.close()
-    return  jsonify({"code":"sucess","res":""})
+    return jsonify({"code": "sucess", "res": ""})
     # insert into 对应用户的购物车表中
     # print(request.form['order_id'])
     # res = {"code": 200}
@@ -170,16 +167,16 @@ def query_cart():
     r = s.query(OmsCartItem).filter(OmsCartItem.member_id == userID).all()
     res = []
     for ri in r:
-      res.append({
-        "id": ri.id,
-        "checked": ri.checked,
-        "picUrl": ri.product_pic,
-        "title": ri.product_name,
-        "spec": ri.product_attr,
-        "count": ri.quantity,
-        "maxNum": ri.max_number,
-        "price": ri.price
-      })
+        res.append({
+            "id": ri.id,
+            "checked": ri.checked,
+            "picUrl": ri.product_pic,
+            "title": ri.product_name,
+            "spec": ri.product_attr,
+            "count": ri.quantity,
+            "maxNum": ri.max_number,
+            "price": ri.price
+        })
     print(res)
     # res = [{
     #     "id": 1,
@@ -442,10 +439,10 @@ def admin_product(product_id=0):
             code = "success"
             for productI in resAll:
                 res.append(
-                    {"product_id": productI.id,
+                    {"id": productI.id,
                      "pic": productI.pic,
-                     "product_name": productI.name,
-                     "product_brand": productI.brand_name,
+                     "name": productI.name,
+                     "brand_name": productI.brand_name,
                      "price": float(productI.price), "product_sn": productI.product_sn, "publish_status": productI.publish_status, "new_status": productI.new_status, "recommand_status": productI.recommand_status, "verify_status": productI.verify_status, "sort": productI.sort, "sale": productI.sale}
                 )
         else:
@@ -479,8 +476,9 @@ def admin_product(product_id=0):
     if request.method == 'PUT':
         # 查询并更新
         # print('debug')
-        print(dict(request.json))
-        s.query(PmsProduct).filter(PmsProduct.id==product_id).update(dict(request.json))
+        print(dict(request.form))
+        s.query(PmsProduct).filter(PmsProduct.id ==
+                                   product_id).update(dict(request.form))
         # commit
         s.commit()
         s.close()
@@ -493,9 +491,6 @@ def admin_product(product_id=0):
         s.commit()
         s.close()
         return jsonify({"code": "sucess", "res": ""})
-
-
-
 
 
 if __name__ == '__main__':
