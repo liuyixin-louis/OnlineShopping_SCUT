@@ -368,7 +368,7 @@ def get_product(product_id):
 
 
 @app.route("/admin/products/", methods=['GET',"POST"])
-@app.route("/admin/products/<int:product_id>", methods=['POST', 'PUT', 'delete'])
+@app.route("/admin/products/<int:product_id>", methods=['GET','POST', 'PUT', 'delete'])
 def admin_product(product_id=0):
     # 数据库连接池、数据定义
     s = DBSession()
