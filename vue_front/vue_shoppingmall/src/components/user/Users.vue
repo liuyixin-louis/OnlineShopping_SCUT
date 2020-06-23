@@ -84,10 +84,6 @@ export default {
   }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c28213c20d2a0d04d52ac384c7f86fb5d1b47051
 </script>
 <style lang="less" scoped>
 </style>

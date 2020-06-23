@@ -94,7 +94,7 @@ export default {
       console.log(res)
     },
     goAddpage () {
-      this.$router.push('/lists/add')
+      this.$router.push('/add')
     }
   }
 }

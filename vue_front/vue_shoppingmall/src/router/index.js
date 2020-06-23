@@ -18,7 +18,7 @@ export default new Router({
         { path: '/categories', component: Cate },
         { path: '/users', component: Users },
         { path: '/lists', component: List },
-        { path: '/lists/add', component: Add }
+        { path: '/add', component: Add }
       ]
     }
 
