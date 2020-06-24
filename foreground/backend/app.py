@@ -6,7 +6,12 @@ from sqlalchemy.orm import sessionmaker
 from model import *
 from flask_sqlalchemy import SQLAlchemy
 # from config import mysql_path
+
+# please write your databasePath
+# in config_kk.py and add it to .gitignore!!——lyx
 from config_kk import mysql_path
+
+
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = '123456'
