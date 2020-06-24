@@ -7,6 +7,13 @@ import Users from '../components/user/Users.vue'
 import List from '../components/goods/list.vue'
 import Add from '../components/goods/Add.vue'
 import Shops from '../components/shops/Shops.vue'
+import Statistics from '../components/statistics/Statistics.vue'
+import User_info from '../components/statistics/User_info.vue'
+import Order from '../components/orders/Order.vue'
+import Stoke from '../components/goods/Stoke.vue'
+import Attribute from '../components/goods/Attribute.vue'
+
+
 
 Vue.use(Router)
 export default new Router({
@@ -21,7 +28,11 @@ export default new Router({
                 { path: '/users', component: Users },
                 { path: '/lists', component: List },
                 { path: '/add', component: Add },
-                { path: '/shops', component: Shops }
+                { path: '/attribute', component: Attribute },
+                { path: '/stokes', component: Stoke },
+                { path: '/orders', component: Order },
+                { path: '/user_info', component: User_info },
+                { path: '/statistics', component: Statistics }
             ]
         }
 
