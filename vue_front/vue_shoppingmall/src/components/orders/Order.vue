@@ -90,7 +90,7 @@ export default {
         pagenum: 1,
         pagesize: 10
       },
-      goodslist: [],
+      orderslist: [],
       total: 0,
       editDialogVisible: false, // 控制修改商品对话框的显示与隐藏
       editForm: {}, // 保存查询到的用户信息
@@ -104,21 +104,21 @@ export default {
         }
         ]
       },
-      tempGoodList: []
+      tempOrderList: []
     }
   },
   created () {
-    this.getGoodsList()
+    this.getOrdersList()
   },
   methods: {
-    async getGoodsList () {
-      const { data: res } = await this.$http.get('admin/products')
+    async getOrdersList () {
+      const { data: res } = await this.$http.get('admin/orders')
       // console.log('展示' + res.code)
       console.log(res)
       // console.log(res.res)
       //  console.log(res.all_users_info)
-      this.goodslist = res.res;
-      this.tempGoodList = res.res;
+      this.orderslist = res.res;
+      this.tempOrderList = res.res;
       this.total = res.res.length
     },
     handleSizeChange (newSize) {
@@ -169,7 +169,7 @@ export default {
         this.$message.success('更新用户信息成功！')
       })
     },
-    fillterGoodList () {
+    fillterOrderList () {
       console.log(this.querystr);
       var query_str = this.querystr;
       if (query_str != "") {

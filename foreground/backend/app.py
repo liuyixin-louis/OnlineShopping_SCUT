@@ -16,7 +16,12 @@ app = Flask(__name__)
 # 解决跨域问题
 CORS(app, supports_credentials=True)
 # 初始化数据库连接:
+<<<<<<< HEAD
+# engine = create_engine(
+#     'mysql+pymysql://root:zxcxzcz123@localhost:3306/our_mall?charset=utf8')
+=======
 # print("config:",mysql_path)
+>>>>>>> 938c2b5e0271f90e64a8a030a48137e400342b7c
 engine = create_engine(mysql_path)
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
@@ -701,45 +706,43 @@ def user_statistics_info():
         return jsonify({"code": "sucess", "res": res})
 
 
-
-@app.route("/rank/time",methods=["GET","POST"])
+@app.route("/rank/time", methods=["GET", "POST"])
 def getRankTime():
-  if request.method == 'GET':
-    db = DBSession()
-    rank = db.query(PmsShopsale).filter(PmsShopsale.id==14).order_by(PmsShopsale.time)
-    return jsonify(rank_res=[e.serialize() for e in rank])
-  elif request.method =='POST':
-    db = DBSession()
-    id = request.form['id']
-    rank=db.query(PmsShopsale).filter(PmsShopsale.id==id).order_by(PmsShopsale.time)
-    return jsonify(rank_res=[e.serialize() for e in rank])
+    if request.method == 'GET':
+        db = DBSession()
+        rank = db.query(PmsShopsale).filter(
+            PmsShopsale.id == 14).order_by(PmsShopsale.time)
+        return jsonify(rank_res=[e.serialize() for e in rank])
+    elif request.method == 'POST':
+        db = DBSession()
+        id = request.form['id']
+        rank = db.query(PmsShopsale).filter(
+            PmsShopsale.id == id).order_by(PmsShopsale.time)
+        return jsonify(rank_res=[e.serialize() for e in rank])
 
-@app.route("/rank/product",methods=["GET"])
+
+@app.route("/rank/product", methods=["GET"])
 def getRankProduct():
-  if request.method =='GET':
-    db=DBSession()  
-    rank = db.query(PmsProduct).order_by(-PmsProduct.sale)
-    # for i in rank:
-    #   print(i.name)
-    #   print(i.sale)
-    #   print('\n')
-  return jsonify(rank_res=[e.serialize() for e in rank])
+    if request.method == 'GET':
+        db = DBSession()
+        rank = db.query(PmsProduct).order_by(-PmsProduct.sale)
+        # for i in rank:
+        #   print(i.name)
+        #   print(i.sale)
+        #   print('\n')
+    return jsonify(rank_res=[e.serialize() for e in rank])
 
-@app.route("/rank/shop",methods=["GET"])
+
+@app.route("/rank/shop", methods=["GET"])
 def getRankShop():
-  if request.method =='GET':
-    db=DBSession()  
-    rank = db.query(PmsShop).order_by(-PmsShop.sale)
-    # for i in rank:
-    #   print(i.name)
-    #   print(i.sale)
-    #   print('\n')
-  return jsonify(rank_res=[e.serialize() for e in rank])
-
-
-
-
-
+    if request.method == 'GET':
+        db = DBSession()
+        rank = db.query(PmsShop).order_by(-PmsShop.sale)
+        # for i in rank:
+        #   print(i.name)
+        #   print(i.sale)
+        #   print('\n')
+    return jsonify(rank_res=[e.serialize() for e in rank])
 
 
 if __name__ == '__main__':
