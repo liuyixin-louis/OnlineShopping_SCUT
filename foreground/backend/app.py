@@ -700,22 +700,6 @@ def user_statistics_info():
         return jsonify({"code": "sucess", "res": res})
 
 
-@app.route("/admin/user/statistics_info", methods=['GET'])
-def user_statistics_info():
-    # 数据库连接池、数据定义
-    s = DBSession()
-
-    # 判断请求类型
-
-    # 查询订单
-    if request.method == 'GET':
-        resAll = s.query(UmsMemberStatisticsInfo).all()
-        res = []
-        for i in resAll:
-            # print(i.to_json())
-            res.append(i.to_json())
-        return jsonify({"code": "sucess", "res": res})
-
 
 if __name__ == '__main__':
     app.debug = True
