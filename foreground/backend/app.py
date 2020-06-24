@@ -634,7 +634,14 @@ def admin_order(order_id=0):
         res = []
         for i in resAll:
             # print(i.to_json())
-            res.append(i.to_json())
+            a = i.to_json()
+            a['total_amount'] = flaot(a['total_amount'])
+            a['pay_amount'] = flaot(a['pay_amount'])
+            a['freight_amount'] = flaot(a['freight_amount'])
+            a['freight_amount'] = flaot(a['freight_amount'])
+            # a['price'] = float(a['price'])
+            res.append(a)
+        print(res)
         return jsonify({"code": "sucess", "res": res})
         # if(resAll):
         #     code = "success"
