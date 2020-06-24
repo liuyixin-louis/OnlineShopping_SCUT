@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-/kkkkkk.py
+kkkkkk.py
 
 
 # local env files
