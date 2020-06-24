@@ -37,8 +37,8 @@
               </template>
             </el-menu-item>
 
-            <el-menu-item index="sellers" @click="saveNavState('/sellers')">
-              <!-- 二级菜单模版区域 -->
+            <el-menu-item index="shops" @click="saveNavState('/shops')">
+              <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-s-help"></i>
@@ -76,16 +76,6 @@
                 <i class="el-icon-s-help"></i>
                 <!-- 文本 -->
                 <span>属性管理</span>
-              </template>
-            </el-menu-item>
-
-            <el-menu-item index="parameters" @click="saveNavState('/parameters')">
-              <!-- 一级菜单模版区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-s-help"></i>
-                <!-- 文本 -->
-                <span>分类参数</span>
               </template>
             </el-menu-item>
 
@@ -158,16 +148,6 @@
             </el-menu-item>
 
             <el-menu-item index="sellersinfo" @click="saveNavState('/sellersinfo')">
-              <!-- 一级菜单模版区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-s-help"></i>
-                <!-- 文本 -->
-                <span>商家统计信息</span>
-              </template>
-            </el-menu-item>
-
-            <el-menu-item index="platsinfo" @click="saveNavState('/platsinfo')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
