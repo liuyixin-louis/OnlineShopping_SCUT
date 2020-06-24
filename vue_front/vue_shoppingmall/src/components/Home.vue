@@ -91,7 +91,7 @@
             </el-menu-item>
 
             <!-- 二级菜单 -->
-            <el-menu-item index="stocks" @click="saveNavState('/stocks')">
+            <el-menu-item index="stokes" @click="saveNavState('/stokes')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
@@ -114,7 +114,7 @@
             </template>
 
             <!-- 二级菜单 -->
-            <el-menu-item index="4-1" @click="saveNavState('/4-1')">
+            <el-menu-item index="orders" @click="saveNavState('/orders')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
