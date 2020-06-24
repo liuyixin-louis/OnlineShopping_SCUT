@@ -12,7 +12,7 @@
       <el-row :gutter="20">
         <el-col :span="7">
           <!-- 搜索区域 -->
-          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable >
+          <el-input placeholder="请输入内容" v-model="querystr" clearable >
             <el-button slot="append" icon="el-icon-search" @click="fillterGoodList"></el-button>
           </el-input>
         </el-col>
@@ -21,7 +21,7 @@
         </el-col>
       </el-row>
       <!-- 用户列表区域 -->
-      <el-table :data="temp-good-list" style="width: 100%" border>
+      <el-table :data="tempGoodList" style="width: 100%" border>
         <el-table-column type="index">
         </el-table-column>
         <el-table-column prop="id" label="商品编号">
@@ -84,6 +84,7 @@ import qs from 'qs'
 export default {
   data () {
     return {
+      querystr:"",
       queryInfo: {
         query: '',
         pagenum: 1,
@@ -169,18 +170,19 @@ export default {
       })
     },
     fillterGoodList(){
-      var query_str = queryInfo.query;
+      console.log(this.querystr);
+      var query_str = this.querystr;
       if(query_str!=""){
       var t = [];
-      for (const gi of goodslist) {
+      for (const gi of this.goodslist) {
           // console.log(v);
-          if(str(gi.name).search(query_str) != -1){
+          if(gi.name.search(query_str) != -1){
             t.push(gi);
           };
       }
-      tempGoodList = t;
+      this.tempGoodList = t;
       }else{
-        tempGoodList = goodslist ;
+        this.tempGoodList = this.goodslist ;
       };
       
     }
