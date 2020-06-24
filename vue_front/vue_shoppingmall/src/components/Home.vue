@@ -37,7 +37,7 @@
               </template>
             </el-menu-item>
             
-            <el-menu-item index="users" @click="saveNavState('/users')">
+            <el-menu-item index="shops" @click="saveNavState('/shops')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
@@ -48,10 +48,6 @@
             </el-menu-item>
           </el-submenu>
           
-
-
-
-
           <!-- 一级菜单 -->
           <el-submenu index="3">
             <!-- 一级菜单模版区域 -->
@@ -62,7 +58,7 @@
               <span>商品管理</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="lists" @click="saveNavState('/3-1')">
+            <el-menu-item index="lists" @click="saveNavState('/lists')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
@@ -83,15 +79,6 @@
               </template>
             </el-menu-item>
 
-            <el-menu-item index="3-2" @click="saveNavState('/3-2')">
-              <!-- 一级菜单模版区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-s-help"></i>
-                <!-- 文本 -->
-                <span>分类参数</span>
-              </template>
-            </el-menu-item>
 
             <!-- 二级菜单 -->
             <el-menu-item index="categories" @click="saveNavState('/categories')">
@@ -169,20 +156,9 @@
                 <!-- 图标 -->
                 <i class="el-icon-s-help"></i>
                 <!-- 文本 -->
-                <span>商家统计信息</span>
-              </template>
-            </el-menu-item>
-
-            <el-menu-item index="users" @click="saveNavState('/users')">
-              <!-- 一级菜单模版区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-s-help"></i>
-                <!-- 文本 -->
                 <span>平台统计信息</span>
               </template>
             </el-menu-item>
-
 
           </el-submenu>
         </el-menu>
