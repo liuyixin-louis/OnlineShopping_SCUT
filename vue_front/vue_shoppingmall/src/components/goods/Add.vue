@@ -70,7 +70,8 @@ export default {
         recommand_status: 0,
         new_status: 0,
         sort: '',
-        sale: 0
+        sale: 0,
+        shop_id:1
       },
       addFormRules: {
         id: [{
@@ -104,6 +105,9 @@ export default {
           required: true, message: '请输入商品排序', trigger: 'blur'
         }],
         sale: [{
+          required: true, message: '请输入商品销量', trigger: 'blur'
+        }],
+        shop_id: [{
           required: true, message: '请输入商品销量', trigger: 'blur'
         }]
       },
