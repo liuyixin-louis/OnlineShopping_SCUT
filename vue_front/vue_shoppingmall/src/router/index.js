@@ -17,12 +17,13 @@ import Shops from '../components/shops/Shops.vue'
 import Statistics from '../components/statistics/Statistics.vue'
 import User_info from '../components/statistics/User_info.vue'
 import Order from '../components/orders/Order.vue'
-import Stoke from '../components/goods/Stoke.vue'
+import Stock from '../components/goods/Stock.vue'
 import Attribute from '../components/goods/Attribute.vue'
 
 
 // 注册组件后即可使用
 // Vue.component('v-chart', ECharts)
+
 
 Vue.use(Router)
 export default new Router({
@@ -39,7 +40,7 @@ export default new Router({
                 { path: '/add', component: Add },
                 { path: '/attribute', component: Attribute }, ,
                 { path: '/shops', component: Shops },
-                { path: '/stokes', component: Stoke },
+                { path: '/stock', component: Stock },
                 { path: '/orders', component: Order },
                 { path: '/user_info', component: User_info },
                 { path: '/statistics', component: Statistics }
