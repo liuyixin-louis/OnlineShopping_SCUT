@@ -16,12 +16,6 @@ app = Flask(__name__)
 # 解决跨域问题
 CORS(app, supports_credentials=True)
 # 初始化数据库连接:
-<<<<<<< HEAD
-# engine = create_engine(
-#     'mysql+pymysql://root:zxcxzcz123@localhost:3306/our_mall?charset=utf8')
-=======
-# print("config:",mysql_path)
->>>>>>> 938c2b5e0271f90e64a8a030a48137e400342b7c
 engine = create_engine(mysql_path)
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
