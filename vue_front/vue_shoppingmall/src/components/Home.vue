@@ -36,7 +36,7 @@
                 <span>用户基本信息</span>
               </template>
             </el-menu-item>
-            
+
             <el-menu-item index="shops" @click="saveNavState('/shops')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
@@ -47,7 +47,7 @@
               </template>
             </el-menu-item>
           </el-submenu>
-          
+
           <!-- 一级菜单 -->
           <el-submenu index="3">
             <!-- 一级菜单模版区域 -->
@@ -78,7 +78,6 @@
                 <span>属性管理</span>
               </template>
             </el-menu-item>
-
 
             <!-- 二级菜单 -->
             <el-menu-item index="categories" @click="saveNavState('/categories')">
@@ -114,7 +113,6 @@
               <span>订单管理</span>
             </template>
 
-
             <!-- 二级菜单 -->
             <el-menu-item index="orders" @click="saveNavState('/orders')">
               <!-- 一级菜单模版区域 -->
@@ -125,7 +123,6 @@
                 <span>用户订单</span>
               </template>
             </el-menu-item>
-
 
           </el-submenu>
 

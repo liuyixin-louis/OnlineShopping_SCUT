@@ -471,9 +471,9 @@ def admin_product(product_id=0):
                      "name": productI.name,
                      "brand_name": productI.brand_name,
                      "price": float(productI.price), "product_sn": productI.product_sn, "publish_status": productI.publish_status,
-                    "new_status": productI.new_status, "recommand_status": productI.recommand_status,
-                     "verify_status": productI.verify_status, "sort": productI.sort, 
-                     "sale": productI.sale,"shop_id":productI.shop_id}
+                     "new_status": productI.new_status, "recommand_status": productI.recommand_status,
+                     "verify_status": productI.verify_status, "sort": productI.sort,
+                     "sale": productI.sale, "shop_id": productI.shop_id}
                 )
         else:
             code = "fail"
@@ -498,13 +498,12 @@ def admin_product(product_id=0):
         shop_id = request.form['shop_id']
         new_product = PmsProduct(id=id, pic=pic, name=name, brand_name=brand_name, price=price, product_sn=product_sn,
                                  publish_status=publish_status, new_status=new_status,
-                                  recommand_status=recommand_status, sort=sort, sale=sale,shop_id =shop_id)
+                                 recommand_status=recommand_status, sort=sort, sale=sale, shop_id=shop_id)
         # new_product = PmsProduct(dict(request.form))
         s.add(new_product)
         s.commit()
         s.close()
         return jsonify({"code": "sucess", "res": ""})
-
 
     # 更新商品
     if request.method == 'PUT':
@@ -551,7 +550,6 @@ def signup():
     # dict(method='get',id='1',username='yanhao',email='123456',status='fail')
 
 
-
 @app.route("/admin/users/", methods=['GET', "POST"])
 @app.route("/admin/users/<int:user_id>", methods=['GET', 'POST', 'PUT', 'delete'])
 def admin_user(user_id=0):
@@ -569,10 +567,10 @@ def admin_user(user_id=0):
             for useri in resAll:
                 res.append(
                     {"id": useri.id,
-                     "username":useri.username,
-                     "nickname":useri.nickname,
-                     "city":useri.city,
-                     "phone":useri.phone
+                     "username": useri.username,
+                     "nickname": useri.nickname,
+                     "city": useri.city,
+                     "phone": useri.phone
                      }
                 )
         else:
@@ -588,13 +586,13 @@ def admin_user(user_id=0):
         nickname = request.form['nickname']
         city = request.form['city']
         phone = request.form['phone']
-        new_user = UmsMember(id =id ,username = username,nickname = nickname,city=city,phone=phone)
+        new_user = UmsMember(id=id, username=username,
+                             nickname=nickname, city=city, phone=phone)
         # new_product = PmsProduct(dict(request.form))
         s.add(new_user)
         s.commit()
         s.close()
         return jsonify({"code": "sucess", "res": ""})
-
 
     # 更新用户
     if request.method == 'PUT':
@@ -602,7 +600,7 @@ def admin_user(user_id=0):
         # print('debug')
         print(dict(request.form))
         s.query(UmsMember).filter(UmsMember.id ==
-                                   user_id).update(dict(request.form))
+                                  user_id).update(dict(request.form))
         # commit
         s.commit()
         s.close()
@@ -615,6 +613,7 @@ def admin_user(user_id=0):
         s.commit()
         s.close()
         return jsonify({"code": "sucess", "res": ""})
+
 
 @app.route("/admin/orders/", methods=['GET', "POST"])
 @app.route("/admin/orders/<int:order_id>", methods=['GET', 'POST', 'PUT', 'delete'])
@@ -663,14 +662,13 @@ def admin_order(order_id=0):
     #     s.close()
     #     return jsonify({"code": "sucess", "res": ""})
 
-
     # 更新订单
     if request.method == 'PUT':
         # 查询并更新
         # print('debug')
         print(dict(request.form))
         s.query(OmsOrder).filter(OmsOrder.id ==
-                                   order_id).update(dict(request.form))
+                                 order_id).update(dict(request.form))
         # commit
         s.commit()
         s.close()
@@ -685,28 +683,11 @@ def admin_order(order_id=0):
     #     return jsonify({"code": "sucess", "res": ""})
 
 
-
 @app.route("/admin/user/statistics_info", methods=['GET'])
 def user_statistics_info():
     # 数据库连接池、数据定义
     s = DBSession()
-    
-    # 判断请求类型
 
-    # 查询订单
-    if request.method == 'GET':
-        resAll = s.query(UmsMemberStatisticsInfo).all()
-        res = []
-        for i in resAll:
-            # print(i.to_json())
-            res.append(i.to_json())
-        return jsonify({"code": "sucess", "res": res})
-
-@app.route("/admin/user/statistics_info", methods=['GET'])
-def user_statistics_info():
-    # 数据库连接池、数据定义
-    s = DBSession()
-    
     # 判断请求类型
 
     # 查询订单
@@ -719,7 +700,22 @@ def user_statistics_info():
         return jsonify({"code": "sucess", "res": res})
 
 
-        
+@app.route("/admin/user/statistics_info", methods=['GET'])
+def user_statistics_info():
+    # 数据库连接池、数据定义
+    s = DBSession()
+
+    # 判断请求类型
+
+    # 查询订单
+    if request.method == 'GET':
+        resAll = s.query(UmsMemberStatisticsInfo).all()
+        res = []
+        for i in resAll:
+            # print(i.to_json())
+            res.append(i.to_json())
+        return jsonify({"code": "sucess", "res": res})
+
 
 if __name__ == '__main__':
     app.debug = True
