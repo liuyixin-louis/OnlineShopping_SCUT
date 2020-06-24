@@ -470,7 +470,10 @@ def admin_product(product_id=0):
                      "pic": productI.pic,
                      "name": productI.name,
                      "brand_name": productI.brand_name,
-                     "price": float(productI.price), "product_sn": productI.product_sn, "publish_status": productI.publish_status, "new_status": productI.new_status, "recommand_status": productI.recommand_status, "verify_status": productI.verify_status, "sort": productI.sort, "sale": productI.sale}
+                     "price": float(productI.price), "product_sn": productI.product_sn, "publish_status": productI.publish_status,
+                    "new_status": productI.new_status, "recommand_status": productI.recommand_status,
+                     "verify_status": productI.verify_status, "sort": productI.sort, 
+                     "sale": productI.sale,"shop_id":productI.shop_id}
                 )
         else:
             code = "fail"
@@ -492,14 +495,18 @@ def admin_product(product_id=0):
         # recommand_status = request.form['recommand_status']
         sort = request.form['sort']
         sale = request.form['sale']
+        shop_id = request.form['shop_id']
         new_product = PmsProduct(id=id, pic=pic, name=name, brand_name=brand_name, price=price, product_sn=product_sn,
-                                 publish_status=publish_status, new_status=new_status, recommand_status=recommand_status, sort=sort, sale=sale)
+                                 publish_status=publish_status, new_status=new_status,
+                                  recommand_status=recommand_status, sort=sort, sale=sale,shop_id =shop_id)
         # new_product = PmsProduct(dict(request.form))
         s.add(new_product)
         s.commit()
         s.close()
         return jsonify({"code": "sucess", "res": ""})
-        # 更新商品
+
+
+    # 更新商品
     if request.method == 'PUT':
         # 查询并更新
         # print('debug')

@@ -34,6 +34,8 @@
         </el-table-column>
         <el-table-column prop="sale" label="销量">
         </el-table-column>
+        <el-table-column prop="shop_id" label="商店ID">
+        </el-table-column>
         <el-table-column label="操作">
           <!-- 操作 -->
           <template slot-scope="scope">
