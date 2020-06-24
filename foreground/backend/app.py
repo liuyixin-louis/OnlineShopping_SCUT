@@ -551,6 +551,71 @@ def signup():
     # dict(method='get',id='1',username='yanhao',email='123456',status='fail')
 
 
+
+@app.route("/admin/users/", methods=['GET', "POST"])
+@app.route("/admin/users/<int:user_id>", methods=['GET', 'POST', 'PUT', 'delete'])
+def admin_user(user_id=0):
+    # 数据库连接池、数据定义
+    s = DBSession()
+
+    # 判断请求类型
+
+    # 查询用户
+    if request.method == 'GET':
+        resAll = s.query(UmsMember).all()
+        res = []
+        if(resAll):
+            code = "success"
+            for useri in resAll:
+                res.append(
+                    {"id": useri.id,
+                     "username":useri.username,
+                     "nickname":useri.nickname,
+                     "city":useri.city,
+                     "phone":useri.phone
+                     }
+                )
+        else:
+            code = "fail"
+        s.close()
+        return jsonify({"code": code, "res": res})
+
+    # 添加用户
+    if request.method == 'POST':
+        print(request.form)
+        id = request.form['id']
+        username = request.form['username']
+        nickname = request.form['nickname']
+        city = request.form['city']
+        phone = request.form['phone']
+        new_user = UmsMember(id =id ,username = username,nickname = nickname,city=city,phone=phone)
+        # new_product = PmsProduct(dict(request.form))
+        s.add(new_user)
+        s.commit()
+        s.close()
+        return jsonify({"code": "sucess", "res": ""})
+
+
+    # 更新用户
+    if request.method == 'PUT':
+        # 查询并更新
+        # print('debug')
+        print(dict(request.form))
+        s.query(UmsMember).filter(UmsMember.id ==
+                                   user_id).update(dict(request.form))
+        # commit
+        s.commit()
+        s.close()
+        return jsonify({"code": "sucess", "res": ""})
+
+    # 删除用户
+    if request.method == "DELETE":
+        delete_user = s.query(UmsMember).filter_by(id=user_id).first()
+        s.delete(delete_user)
+        s.commit()
+        s.close()
+        return jsonify({"code": "sucess", "res": ""})
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='localhost', port=5000)
