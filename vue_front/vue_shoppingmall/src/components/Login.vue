@@ -64,11 +64,23 @@ export default {
         // 如果值为false，不发起登陆请求
         if (!valid) return
         // const result = await this.$http.get('')
+        // const result = await this.$http.post('signin', qs.stringify(this.loginForm))
+        // console.log(JSON.parse(result.request.response))
+        var that = this;
+        this.$http.post('signin', qs.stringify(this.loginForm)).then(function(res){
+                    // document.write(res.body);    
+                    console.log(res);
+                    if(res.data.state==true){
+                      that.$router.push({
+                      path:'/home'
+                      })
+                    }
+                },function(){
+                    console.log('请求失败处理');
+                });
 
-        const result = await this.$http.post('signin', qs.stringify(this.loginForm))
-
-        console.log(JSON.parse(result.request.response))
       })
+
     }
   }
 }
