@@ -12,7 +12,7 @@
       <el-row :gutter="20">
         <el-col :span="7">
           <!-- 搜索区域 -->
-          <el-input placeholder="请输入内容" v-model="querystr" clearable >
+          <el-input placeholder="请输入内容" v-model="querystr" clearable>
             <el-button slot="append" icon="el-icon-search" @click="fillterGoodList"></el-button>
           </el-input>
         </el-col>
@@ -39,9 +39,11 @@
         <el-table-column label="操作">
           <!-- 操作 -->
           <template slot-scope="scope">
-            <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)">编辑
+            <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini"
+              @click="showEditDialog(scope.row.id)">编辑
             </el-button>
-            <el-button type="danger" style="float: right;" icon="el-icon-delete" size="mini" @click="removeById(scope.row.id)">删除
+            <el-button type="danger" style="float: right;" icon="el-icon-delete" size="mini"
+              @click="removeById(scope.row.id)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -70,11 +72,7 @@
           <el-button type="primary" @click="editUserInfo">确 定</el-button>
         </span>
       </el-dialog>
-      <!-- 分页 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="queryInfo.pagenum" :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pagesize"
-        layout="total, sizes, prev, pager, next, jumper" :total="total" background>
-      </el-pagination>
+
     </el-card>
 
   </div>
@@ -86,7 +84,7 @@ import qs from 'qs'
 export default {
   data () {
     return {
-      querystr:"",
+      querystr: "",
       queryInfo: {
         query: '',
         pagenum: 1,
@@ -106,7 +104,7 @@ export default {
         }
         ]
       },
-      tempGoodList:[]
+      tempGoodList: []
     }
   },
   created () {
@@ -121,7 +119,7 @@ export default {
       //  console.log(res.all_users_info)
       this.goodslist = res.res;
       this.tempGoodList = res.res;
-      // this.total = res.res.length
+      this.total = res.res.length
     },
     handleSizeChange (newSize) {
       this.queryInfo.pagesize = newSize
@@ -171,22 +169,22 @@ export default {
         this.$message.success('更新用户信息成功！')
       })
     },
-    fillterGoodList(){
+    fillterGoodList () {
       console.log(this.querystr);
       var query_str = this.querystr;
-      if(query_str!=""){
-      var t = [];
-      for (const gi of this.goodslist) {
+      if (query_str != "") {
+        var t = [];
+        for (const gi of this.goodslist) {
           // console.log(v);
-          if(gi.name.search(query_str) != -1){
+          if (gi.name.search(query_str) != -1) {
             t.push(gi);
           };
-      }
-      this.tempGoodList = t;
-      }else{
-        this.tempGoodList = this.goodslist ;
+        }
+        this.tempGoodList = t;
+      } else {
+        this.tempGoodList = this.goodslist;
       };
-      
+
     }
   }
 }

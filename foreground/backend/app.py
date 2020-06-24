@@ -92,25 +92,25 @@ def get_hot():
 @app.route('/admin/get_category')
 def admin_get_category():
     res = [{"id": 1, "title": "服装", "children": [
-    {
-        "id": 2, "title": "内裤", "picUrl": "https://yanxuan.nosdn.127.net/8f8e33740f959f78228ea66ded5a2d34.png"
-    },
-    {
-        "id": 3, "title": "内衣", "picUrl": "https://yanxuan.nosdn.127.net/cd9abb6017e8d0c31d04a6e93fa16c4d.png"
-    },
-    {
-        "id": 4, "title": "袜子", "picUrl": "https://yanxuan.nosdn.127.net/c34360cc88e0f086676680591b737d06.png"
-    },
-    {
-        "id": 5, "title": "T恤", "picUrl": "https://yanxuan.nosdn.127.net/f79dc8718c0f42c3736138e2205ce6ad.png"
-    }
+        {
+            "id": 2, "title": "内裤", "picUrl": "https://yanxuan.nosdn.127.net/8f8e33740f959f78228ea66ded5a2d34.png"
+        },
+        {
+            "id": 3, "title": "内衣", "picUrl": "https://yanxuan.nosdn.127.net/cd9abb6017e8d0c31d04a6e93fa16c4d.png"
+        },
+        {
+            "id": 4, "title": "袜子", "picUrl": "https://yanxuan.nosdn.127.net/c34360cc88e0f086676680591b737d06.png"
+        },
+        {
+            "id": 5, "title": "T恤", "picUrl": "https://yanxuan.nosdn.127.net/f79dc8718c0f42c3736138e2205ce6ad.png"
+        }
     ]}, {"id": 6, "title": "餐厨", "children": [
-    {
-        "id": 7, "title": "锅具", "picUrl": "https://yanxuan.nosdn.127.net/b5cb8e8abc7d7dd20711de9bf4c2f3fa.png"
-    },
-    {
-        "id": 8, "title": "杯壶", "picUrl": "https://yanxuan.nosdn.127.net/7b39e972b2905741b50946463a8c75d0.png"
-    }
+        {
+            "id": 7, "title": "锅具", "picUrl": "https://yanxuan.nosdn.127.net/b5cb8e8abc7d7dd20711de9bf4c2f3fa.png"
+        },
+        {
+            "id": 8, "title": "杯壶", "picUrl": "https://yanxuan.nosdn.127.net/7b39e972b2905741b50946463a8c75d0.png"
+        }
     ]}]
     res = {"code": 200, "res": res}
     return jsonify(res)
@@ -526,11 +526,12 @@ def admin_product(product_id=0):
         s.close()
         return jsonify({"code": "sucess", "res": ""})
 
-@app.route('/signin', methods=['GET','POST'])
+
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
     username = request.form['username']
     password = request.form['password']
-    if (username == '6666' or username=='admin') and (password == '123456'or password == '6666'):
+    if (username == '6666' or username == 'admin') and (password == '123456' or password == '6666'):
         return dict(state=True)
     else:
         return dict(state=False)
@@ -542,12 +543,13 @@ def signup():
     userid = request.form['id']
     name = request.form['username']
     email = request.form['email']
-    u = User(userid,name, email)
+    u = User(userid, name, email)
     db_session.add(u)
     # db_session.commit()
     # return render_template('signup-ok.html', username=name)
-    return dict(method='get',id='1',username='yanhao',email='123456',status='success')
+    return dict(method='get', id='1', username='yanhao', email='123456', status='success')
     # dict(method='get',id='1',username='yanhao',email='123456',status='fail')
+
 
 if __name__ == '__main__':
     app.debug = True
