@@ -3,8 +3,8 @@
     <!-- 面包屑导航区域 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+      <el-breadcrumb-item>订单管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户订单</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 卡片视图区域 -->
@@ -13,15 +13,15 @@
         <el-col :span="7">
           <!-- 搜索区域 -->
           <el-input placeholder="请输入内容" v-model="querystr" clearable>
-            <el-button slot="append" icon="el-icon-search" @click="fillterGoodList"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="fillterOrderList"></el-button>
           </el-input>
         </el-col>
         <el-col :span="5">
-          <el-button type="primary" @click="goAddpage">添加商品</el-button>
+          <el-button type="primary" @click="goAddpage">添加订单</el-button>
         </el-col>
       </el-row>
       <!-- 用户列表区域 -->
-      <el-table :data="tempGoodList" style="width: 100%" border>
+      <el-table :data="tempOrderList" style="width: 100%" border>
         <el-table-column type="index">
         </el-table-column>
         <el-table-column prop="id" label="商品编号">
