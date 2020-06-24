@@ -69,7 +69,7 @@
             </el-menu-item>
 
             <!-- 二级菜单 -->
-            <el-menu-item index="attributes" @click="saveNavState('/attributes')">
+            <el-menu-item index="attribute" @click="saveNavState('/attribute')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
@@ -136,8 +136,8 @@
               <span>数据统计</span>
             </template>
             <!-- 二级菜单 -->
-
-            <el-menu-item index="usersinfo" @click="saveNavState('/usersinfo')">
+            
+            <el-menu-item index="user_info" @click="saveNavState('/user_info')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
@@ -147,7 +147,7 @@
               </template>
             </el-menu-item>
 
-            <el-menu-item index="sellersinfo" @click="saveNavState('/sellersinfo')">
+            <el-menu-item index="statistics" @click="saveNavState('/statistics')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
