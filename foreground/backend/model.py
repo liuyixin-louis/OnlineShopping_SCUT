@@ -146,6 +146,12 @@ class OmsOrder(Base):
 
     member = relationship('UmsMember')
 
+    def to_json(self): # ---------------------
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict
+
 
 class PmsProduct(Base):
     __tablename__ = 'pms_product'
