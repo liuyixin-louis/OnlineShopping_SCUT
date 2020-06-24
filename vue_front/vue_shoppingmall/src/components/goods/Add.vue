@@ -125,8 +125,26 @@ export default {
         }
         //  const form = _.cloneDeep(this.addForm)
         console.log(this.addForm)
-        const result = await this.$http.post('admin/products/', qs.stringify(this.addForm))
-        console.log(JSON.parse(result.request.response))
+        // const result = await this.$http.post('admin/products/', qs.stringify(this.addForm))
+        // console.log(JSON.parse(result.request.response))
+        // this.$http.post('admin/products/', qs.stringify(this.addForm)).then(func)
+
+        var that = this;
+        this.$http.post('admin/products/', qs.stringify(this.addForm)).then(function(res){
+                    // document.write(res.body);    
+                    console.log(res);
+                    if(res.data.code=="sucess"){
+                      alert("添加商品成功！");
+                      that.$router.push({
+                      path:'/lists'
+                      })
+                    }
+                },function(){
+                    alert("添加商品失败！");
+                    console.log('请求失败处理');
+                });
+
+        
       })
     }
   }

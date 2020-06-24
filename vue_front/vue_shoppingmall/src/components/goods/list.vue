@@ -12,8 +12,8 @@
       <el-row :gutter="20">
         <el-col :span="7">
           <!-- 搜索区域 -->
-          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getGoodsList">
-            <el-button slot="append" icon="el-icon-search" @click="getGoodsList"></el-button>
+          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable >
+            <el-button slot="append" icon="el-icon-search" @click="fillterGoodList"></el-button>
           </el-input>
         </el-col>
         <el-col :span="5">
@@ -21,7 +21,7 @@
         </el-col>
       </el-row>
       <!-- 用户列表区域 -->
-      <el-table :data="goodslist" style="width: 100%" border>
+      <el-table :data="temp-good-list" style="width: 100%" border>
         <el-table-column type="index">
         </el-table-column>
         <el-table-column prop="id" label="商品编号">
@@ -37,9 +37,9 @@
         <el-table-column label="操作">
           <!-- 操作 -->
           <template slot-scope="scope">
-            <el-button type="primary" style="text-align: center"  icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)">编辑
+            <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)">编辑
             </el-button>
-            <el-button type="danger" style="text-align: center" icon="el-icon-delete" size="mini" @click="removeById(scope.row.id)">删除
+            <el-button type="danger" style="float: right;" icon="el-icon-delete" size="mini" @click="removeById(scope.row.id)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -102,7 +102,8 @@ export default {
           required: true, message: '请输入商品销量', trigger: 'blur'
         }
         ]
-      }
+      },
+      tempGoodList:[]
     }
   },
   created () {
@@ -111,12 +112,13 @@ export default {
   methods: {
     async getGoodsList () {
       const { data: res } = await this.$http.get('admin/products')
-      console.log('展示' + res.code)
+      // console.log('展示' + res.code)
       console.log(res)
-      console.log(res.res)
+      // console.log(res.res)
       //  console.log(res.all_users_info)
-      this.goodslist = res.res
-      this.total = res.res.length
+      this.goodslist = res.res;
+      this.tempGoodList = res.res;
+      // this.total = res.res.length
     },
     handleSizeChange (newSize) {
       this.queryInfo.pagesize = newSize
@@ -165,6 +167,22 @@ export default {
         this.getGoodsList()
         this.$message.success('更新用户信息成功！')
       })
+    },
+    fillterGoodList(){
+      var query_str = queryInfo.query;
+      if(query_str!=""){
+      var t = [];
+      for (const gi of goodslist) {
+          // console.log(v);
+          if(str(gi.name).search(query_str) != -1){
+            t.push(gi);
+          };
+      }
+      tempGoodList = t;
+      }else{
+        tempGoodList = goodslist ;
+      };
+      
     }
   }
 }
