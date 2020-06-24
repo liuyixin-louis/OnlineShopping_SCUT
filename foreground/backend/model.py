@@ -69,12 +69,31 @@ class PmsProductCategory(Base):
 class PmsShop(Base):
     __tablename__ = 'pms_shop'
 
-    id = Column(BIGINT(20), primary_key=True)
-    shopName = Column(String(255))
-    product_number = Column(INTEGER(11))
+    id = Column(BIGINT(20), primary_key=True,comment='商家id')   
+    shopName = Column(String(255),comment='商家名称,也就是淘宝店名')
+    product_number = Column(INTEGER(11),comment='产品数量')
     is_valid = Column(SMALLINT(1))
+    sale=Column(INTEGER(10),comment='累计销量 设了10位应该够了吧 不会有人可以卖100亿吧')
+   
 
+    def serialize(self):
+        return{
+            'id':self.id,
+            'shopName':self.shopName,
+            'sale':self.sale
+        }
+class PmsShopsale(Base):
+    __tablename__ ='pms_shopsale'
+    id = Column(BIGINT(20),primary_key=True,comment='商家id')  
+    dailysale=Column(INTEGER(8),comment='总不能一天一亿吧')
+    time=Column(DateTime,primary_key=True,comment='是每个每日销量对应的时间')
 
+    def serialize(self):
+        return{
+            'id':self.id,
+            'dailysale':self.dailysale,
+            'time':self.time
+        }
 class UmsAdmin(Base):
     __tablename__ = 'ums_admin'
     __table_args__ = {'comment': '后台用户表'}
@@ -199,6 +218,12 @@ class PmsProduct(Base):
     product_category = relationship('PmsProductCategory')
     shop = relationship('PmsShop')
 
+    def serialize(self):
+        return {
+            'id': self.id, 
+            'name': self.name,
+            'sale': self.sale,
+        }
 
 class PmsProductAttribute(Base):
     __tablename__ = 'pms_product_attribute'
