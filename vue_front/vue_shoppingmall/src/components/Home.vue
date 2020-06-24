@@ -25,6 +25,7 @@
               <!-- 文本 -->
               <span>用户管理</span>
             </template>
+
             <!-- 二级菜单 -->
             <el-menu-item index="users" @click="saveNavState('/users')">
               <!-- 一级菜单模版区域 -->
@@ -32,42 +33,24 @@
                 <!-- 图标 -->
                 <i class="el-icon-s-help"></i>
                 <!-- 文本 -->
-                <span>用户列表</span>
+                <span>用户基本信息</span>
               </template>
             </el-menu-item>
-          </el-submenu>
-
-          <!-- 一级菜单 -->
-          <el-submenu index="2">
-            <!-- 一级菜单模版区域 -->
-            <template slot="title">
-              <!-- 图标 -->
-              <i class="el-icon-s-cooperation"></i>
-              <!-- 文本 -->
-              <span>权限管理</span>
-            </template>
-            <!-- 二级菜单 -->
-            <el-menu-item index="roles" @click="saveNavState('/roles')">
+            
+            <el-menu-item index="users" @click="saveNavState('/users')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-s-help"></i>
                 <!-- 文本 -->
-                <span>角色列表</span>
-              </template>
-            </el-menu-item>
-
-            <!-- 二级菜单 -->
-            <el-menu-item index="rights" @click="saveNavState('/rights')">
-              <!-- 一级菜单模版区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-s-help"></i>
-                <!-- 文本 -->
-                <span>权限列表</span>
+                <span>商家信息管理</span>
               </template>
             </el-menu-item>
           </el-submenu>
+          
+
+
+
 
           <!-- 一级菜单 -->
           <el-submenu index="3">
@@ -96,6 +79,16 @@
                 <!-- 图标 -->
                 <i class="el-icon-s-help"></i>
                 <!-- 文本 -->
+                <span>属性管理</span>
+              </template>
+            </el-menu-item>
+
+            <el-menu-item index="3-2" @click="saveNavState('/3-2')">
+              <!-- 一级菜单模版区域 -->
+              <template slot="title">
+                <!-- 图标 -->
+                <i class="el-icon-s-help"></i>
+                <!-- 文本 -->
                 <span>分类参数</span>
               </template>
             </el-menu-item>
@@ -110,6 +103,18 @@
                 <span>商品分类</span>
               </template>
             </el-menu-item>
+
+            <!-- 二级菜单 -->
+            <el-menu-item index="categories" @click="saveNavState('/categories')">
+              <!-- 一级菜单模版区域 -->
+              <template slot="title">
+                <!-- 图标 -->
+                <i class="el-icon-s-help"></i>
+                <!-- 文本 -->
+                <span>库存管理</span>
+              </template>
+            </el-menu-item>
+
           </el-submenu>
 
           <!-- 一级菜单 -->
@@ -121,6 +126,8 @@
               <!-- 文本 -->
               <span>订单管理</span>
             </template>
+
+
             <!-- 二级菜单 -->
             <el-menu-item index="4-1" @click="saveNavState('/4-1')">
               <!-- 一级菜单模版区域 -->
@@ -128,9 +135,11 @@
                 <!-- 图标 -->
                 <i class="el-icon-s-help"></i>
                 <!-- 文本 -->
-                <span>导航一</span>
+                <span>用户订单</span>
               </template>
             </el-menu-item>
+
+
           </el-submenu>
 
           <!-- 一级菜单 -->
@@ -143,15 +152,38 @@
               <span>数据统计</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="5-1" @click="saveNavState('/5-1')">
+            
+            <el-menu-item index="users" @click="saveNavState('/users')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-s-help"></i>
                 <!-- 文本 -->
-                <span>导航一</span>
+                <span>用户统计信息</span>
               </template>
             </el-menu-item>
+
+            <el-menu-item index="users" @click="saveNavState('/users')">
+              <!-- 一级菜单模版区域 -->
+              <template slot="title">
+                <!-- 图标 -->
+                <i class="el-icon-s-help"></i>
+                <!-- 文本 -->
+                <span>商家统计信息</span>
+              </template>
+            </el-menu-item>
+
+            <el-menu-item index="users" @click="saveNavState('/users')">
+              <!-- 一级菜单模版区域 -->
+              <template slot="title">
+                <!-- 图标 -->
+                <i class="el-icon-s-help"></i>
+                <!-- 文本 -->
+                <span>平台统计信息</span>
+              </template>
+            </el-menu-item>
+
+
           </el-submenu>
         </el-menu>
       </el-aside>
