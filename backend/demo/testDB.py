@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Integer
 from model import *
-from config import mysql_path
+from config_kk import mysql_path
 from sqlalchemy.orm import sessionmaker
 
 # 初始化数据库连接:
@@ -28,4 +28,5 @@ def db_get_category():
     s.close()
     print(res)
 
-db_get_category()
+# db_get_category()
+

@@ -915,10 +915,14 @@ def getStatisticsInfo():
 
 @app.route("/admin/platform_statistics")
 def getPlatformStatistics():
-    res =[{"date":"2020-6-20","sale":999},{"date":"2020-6-21","sale":899},{"date":"2020-6-22","sale":1999},{"date":"2020-6-23","sale":599},{"date":"2020-6-24","sale":799},{"date":"2020-6-25","sale":999},{"date":"2020-6-26","sale":199},{"date":"2020-6-27","sale":99}]
+    # res =[{"date":"2020-6-20","sale":999},{"date":"2020-6-21","sale":899},{"date":"2020-6-22","sale":1999},{"date":"2020-6-23","sale":599},{"date":"2020-6-24","sale":799},{"date":"2020-6-25","sale":999},{"date":"2020-6-26","sale":199},{"date":"2020-6-27","sale":99}]
      # db = DBSession()
     # res = db.query(UmsMemberStatisticsInfo).all()
     # db.close()
+    s = DBSession()
+    resa = s.query(PmsPlatformStatistic).all()
+    res = [{"date":str(r.datetime.date()),"sale":r.tody_sale} for r in resa]
+    s.close()
     return jsonify(res=res,code=200)
 
 

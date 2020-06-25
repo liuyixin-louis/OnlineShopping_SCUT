@@ -467,3 +467,11 @@ class SmsHot(Base):
     display = Column(TINYINT(1))
 
     product = relationship('PmsProduct')
+
+
+class PmsPlatformStatistic(Base):
+    __tablename__ = 'pms_platform_statistics'
+
+    id = Column(INTEGER(11), primary_key=True)
+    datetime = Column(DateTime)
+    tody_sale = Column(INTEGER(8))
