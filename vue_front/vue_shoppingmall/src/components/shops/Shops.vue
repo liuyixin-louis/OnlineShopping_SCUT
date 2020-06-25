@@ -53,10 +53,10 @@
             <el-input v-model="editForm.id" disabled></el-input>
           </el-form-item>
           <el-form-item label="商家名称">
-            <el-input v-model="editForm.shopName" disabled></el-input>
+            <el-input v-model="editForm.shopName"></el-input>
           </el-form-item>
           <el-form-item label="商品数">
-            <el-input v-model="editForm.product_number" disabled></el-input>
+            <el-input v-model="editForm.product_number"></el-input>
           </el-form-item>
           <el-form-item label="是否有效" prop="is_valid">
             <el-input v-model="editForm.is_valid"></el-input>
@@ -133,7 +133,7 @@ export default {
       console.log(res)
     },
     goAddpage () {
-      this.$router.push('/add')
+      this.$router.push('/addShop')
     },
     // 展示修改对话框
     async showEditDialog (id) {
