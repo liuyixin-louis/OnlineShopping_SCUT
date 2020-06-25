@@ -3,6 +3,8 @@ from sqlalchemy import Column, DECIMAL, Date, DateTime, ForeignKey, String, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, SMALLINT, TEXT, TINYINT, VARCHAR
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+import decimal
+
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -169,6 +171,11 @@ class OmsOrder(Base):
         dict = self.__dict__
         if "_sa_instance_state" in dict:
             del dict["_sa_instance_state"]
+        for k,v in dict.items():
+            # print(type(dict[k]))
+            if type(dict[k])==decimal.Decimal:
+                # print ('hit')
+                dict[k] = float(dict[k])
         return dict
 
 
@@ -248,6 +255,11 @@ class PmsProductAttribute(Base):
         dict = self.__dict__
         if "_sa_instance_state" in dict:
             del dict["_sa_instance_state"]
+        for k,v in dict.items():
+            # print(type(dict[k]))
+            if type(dict[k])==decimal.Decimal:
+                # print ('hit')
+                dict[k] = float(dict[k])
         return dict
 
 
@@ -290,9 +302,15 @@ class UmsMemberStatisticsInfo(Base):
         dict = self.__dict__
         if "_sa_instance_state" in dict:
             del dict["_sa_instance_state"]
+        for k,v in dict.items():
+            # print(type(dict[k]))
+            if type(dict[k])==decimal.Decimal:
+                # print ('hit')
+                dict[k] = float(dict[k])
         return dict
 
-        
+
+
 
 class OmsCartItem(Base):
     __tablename__ = 'oms_cart_item'
@@ -417,6 +435,11 @@ class PmsSkuStock(Base):
         dict = self.__dict__
         if "_sa_instance_state" in dict:
             del dict["_sa_instance_state"]
+        for k,v in dict.items():
+            # print(type(dict[k]))
+            if type(dict[k])==decimal.Decimal:
+                # print ('hit')
+                dict[k] = float(dict[k])
         return dict
 
 class SmsFontbanner(Base):
