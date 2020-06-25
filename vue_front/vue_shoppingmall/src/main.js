@@ -3,6 +3,14 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 
+
+
+
+
+//echart
+import VCharts from 'v-charts'
+// import VeLine from 'v-charts/lib/line.common'
+// Vue.component("ve-line", VeLine)
 // import Vue from 'vue'
 // import ECharts from 'vue-echarts' // 在 webpack 环境下指向 components/ECharts.vue
 
@@ -33,6 +41,8 @@ Vue.config.productionTip = false
 
 // 注册树形结构为全局可用的组件
 Vue.component('tree-table', TreeTable)
+
+Vue.use(VCharts)
 
 new Vue({
     router,

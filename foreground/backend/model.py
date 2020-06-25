@@ -244,6 +244,12 @@ class PmsProductAttribute(Base):
 
     product_attribute_category = relationship('PmsProductAttributeCategory')
 
+    def to_json(self): # ---------------------
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict
+
 
 class UmsMemberReceiveAddres(Base):
     __tablename__ = 'ums_member_receive_address'
@@ -280,6 +286,13 @@ class UmsMemberStatisticsInfo(Base):
 
     member = relationship('UmsMember')
 
+    def to_json(self): # ---------------------
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict
+
+        
 
 class OmsCartItem(Base):
     __tablename__ = 'oms_cart_item'
@@ -399,6 +412,12 @@ class PmsSkuStock(Base):
 
     product = relationship('PmsProduct')
 
+
+    def to_json(self): # ---------------------
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict
 
 class SmsFontbanner(Base):
     __tablename__ = 'sms_fontbanner'

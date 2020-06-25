@@ -91,7 +91,7 @@
             </el-menu-item>
 
             <!-- 二级菜单 -->
-            <el-menu-item index="stokes" @click="saveNavState('/stokes')">
+            <el-menu-item index="stock" @click="saveNavState('/stock')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
                 <!-- 图标 -->

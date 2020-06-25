@@ -5,8 +5,12 @@ from sqlalchemy import create_engine, Integer
 from sqlalchemy.orm import sessionmaker
 from model import *
 from flask_sqlalchemy import SQLAlchemy
-# from config_kk import mysql_path
+# from config import mysql_path
+
+# please write your databasePath
+# in config_kk.py and add it to .gitignore!!——lyx
 from config_kk import mysql_path
+
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = '123456'
@@ -16,7 +20,6 @@ app = Flask(__name__)
 # 解决跨域问题
 CORS(app, supports_credentials=True)
 # 初始化数据库连接:
-# print("config:",mysql_path)
 engine = create_engine(mysql_path)
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
@@ -616,6 +619,73 @@ def admin_user(user_id=0):
         return jsonify({"code": "sucess", "res": ""})
 
 
+@app.route("/admin/shops/", methods=['GET', "POST"])
+@app.route("/admin/shops/<int:shop_id>", methods=['GET', 'POST', 'PUT', 'delete'])
+def admin_shops(shop_id=0):
+    # 数据库连接池、数据定义
+    s = DBSession()
+
+    # 判断请求类型
+
+    # 查询商家
+    if request.method == 'GET':
+        resAll = s.query(PmsShop).all()
+        res = []
+        if(resAll):
+            code = "success"
+            for ri in resAll:
+                res.append(
+                    {"id": ri.id,
+                     "shopName": ri.shopName,
+                     "product_number": ri.product_number,
+                     "is_valid": ri.is_valid,
+                     "sale": ri.sale
+                     }
+                )
+        else:
+            code = "fail"
+        s.close()
+        return jsonify({"code": code, "res": res})
+
+    # 添加商家
+    if request.method == 'POST':
+        print(request.form)
+        id = request.form['id']
+        shopName = request.form['shopName']
+        product_number = request.form['product_number']
+        is_valid = request.form['is_valid']
+        sale = request.form['sale']
+        new_shop = PmsShop(id=id, shopName=shopName,
+                           product_number=product_number, is_valid=is_valid, sale=sale)
+        # new_product = PmsProduct(dict(request.form))
+        s.add(new_shop)
+        s.commit()
+        s.close()
+        return jsonify({"code": "sucess", "res": ""})
+
+    # 更新商家
+    if request.method == 'PUT':
+        # 查询并更新
+        print(dict(request.form))
+        s.query(PmsShop).filter(PmsShop.id ==
+                                shop_id).update(dict(request.form))
+        s.commit()
+        s.close()
+        return jsonify({"code": "sucess", "res": ""})
+
+    # 删除商家
+    if request.method == "DELETE":
+        delete_shop = s.query(PmsShop).filter_by(id=shop_id).first()
+        s.delete(delete_shop)
+        s.commit()
+        s.close()
+        return jsonify({"code": "sucess", "res": ""})
+
+
+# def handle_money_problem():
+#     pass
+
+
 @app.route("/admin/orders/", methods=['GET', "POST"])
 @app.route("/admin/orders/<int:order_id>", methods=['GET', 'POST', 'PUT', 'delete'])
 def admin_order(order_id=0):
@@ -630,7 +700,14 @@ def admin_order(order_id=0):
         res = []
         for i in resAll:
             # print(i.to_json())
-            res.append(i.to_json())
+            a = i.to_json()
+            a['total_amount'] = float(a['total_amount'])
+            a['pay_amount'] = float(a['pay_amount'])
+            a['freight_amount'] = float(a['freight_amount'])
+            a['freight_amount'] = float(a['freight_amount'])
+            # a['price'] = float(a['price'])
+            res.append(a)
+        print(res)
         return jsonify({"code": "sucess", "res": res})
         # if(resAll):
         #     code = "success"
@@ -684,21 +761,21 @@ def admin_order(order_id=0):
     #     return jsonify({"code": "sucess", "res": ""})
 
 
-@app.route("/admin/user/statistics_info", methods=['GET'])
-def user_statistics_info():
-    # 数据库连接池、数据定义
-    s = DBSession()
+# @app.route("/admin/user/statistics_info", methods=['GET'])
+# def user_statistics_info():
+#     # 数据库连接池、数据定义
+#     s = DBSession()
 
-    # 判断请求类型
+#     # 判断请求类型
 
-    # 查询订单
-    if request.method == 'GET':
-        resAll = s.query(UmsMemberStatisticsInfo).all()
-        res = []
-        for i in resAll:
-            # print(i.to_json())
-            res.append(i.to_json())
-        return jsonify({"code": "sucess", "res": res})
+#     # 查询订单
+#     if request.method == 'GET':
+#         resAll = s.query(UmsMemberStatisticsInfo).all()
+#         res = []
+#         for i in resAll:
+#             # print(i.to_json())
+#             res.append(i.to_json())
+#         return jsonify({"code": "sucess", "res": res})
 
 
 @app.route("/rank/time", methods=["GET", "POST"])
@@ -725,6 +802,7 @@ def getRankProduct():
         #   print(i.name)
         #   print(i.sale)
         #   print('\n')
+        db.close()
     return jsonify(rank_res=[e.serialize() for e in rank])
 
 
@@ -737,7 +815,38 @@ def getRankShop():
         #   print(i.name)
         #   print(i.sale)
         #   print('\n')
+        db.close()
     return jsonify(rank_res=[e.serialize() for e in rank])
+
+
+@app.route("/admin/attributes")
+def getAttributes():
+    db = DBSession()
+    res = db.query(PmsProductAttribute).all()
+    db.close()
+    return jsonify(res=[r.to_json() for r in res])
+
+
+@app.route("/admin/stoke")
+def getStoke():
+    db = DBSession()
+    res = db.query(PmsSkuStock).all()
+    db.close()
+    return jsonify(res=[parse_sp_data(r.to_json()) for r in res])
+
+
+def parse_sp_data(rjson):
+    j = json.loads(rjson['sp_data'])
+    rjson['sp_data'] = "\n".join([r['key']+":"+r['value'] for r in j])
+    return rjson
+
+
+@app.route("/admin/statistics_info")
+def getStatisticsInfo():
+    db = DBSession()
+    res = db.query(UmsMemberStatisticsInfo).all()
+    db.close()
+    return jsonify(res=[r.to_json() for r in res])
 
 
 if __name__ == '__main__':
