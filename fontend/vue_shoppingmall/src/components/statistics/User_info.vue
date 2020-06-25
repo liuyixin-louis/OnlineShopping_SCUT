@@ -3,8 +3,8 @@
     <!-- 面包屑导航区域 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>订单管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户订单</el-breadcrumb-item>
+      <el-breadcrumb-item>数据统计</el-breadcrumb-item>
+      <el-breadcrumb-item>用户统计信息</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 卡片视图区域 -->
@@ -17,7 +17,7 @@
           </el-input>
         </el-col>
         <el-col :span="5">
-          <el-button type="primary" >库存添加</el-button>
+          <el-button type="primary">库存添加</el-button>
         </el-col>
       </el-row>
       <!-- 用户列表区域 -->
@@ -39,12 +39,10 @@
         </el-table-column>
         <el-table-column label="操作">
           <!-- 操作 -->
-          <template >
-            <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini"
-             >编辑
+          <template>
+            <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini">编辑
             </el-button>
-            <el-button type="danger" style="float: right;" icon="el-icon-delete" size="mini"
-              >删除
+            <el-button type="danger" style="float: right;" icon="el-icon-delete" size="mini">删除
             </el-button>
           </template>
         </el-table-column>
