@@ -16,9 +16,6 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
-        <el-col :span="5">
-          <el-button type="primary" >库存添加</el-button>
-        </el-col>
       </el-row>
       <!-- 用户列表区域 -->
       <el-table :data="DataList" style="width: 100%" border>
@@ -49,13 +46,10 @@
         </el-table-column>
         <el-table-column label="操作">
           <!-- 操作 -->
-          <template >
-            <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini"
-             >编辑
+          <template>
+            <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini">编辑
             </el-button>
-            <el-button type="danger" style="float: right;" icon="el-icon-delete" size="mini"
-              >删除
-            </el-button>
+
           </template>
         </el-table-column>
       </el-table>

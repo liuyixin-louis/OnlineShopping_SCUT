@@ -16,9 +16,7 @@
             <el-button slot="append" icon="el-icon-search" @click="fillterUserList"></el-button>
           </el-input>
         </el-col>
-        <el-col :span="5">
-          <el-button type="primary" @click="goAddpage">添加用户</el-button>
-        </el-col>
+
       </el-row>
       <!-- 用户列表区域 -->
       <el-table :data="tempUserList" style="width: 100%" border>
@@ -39,9 +37,6 @@
           <template slot-scope="scope">
             <el-button type="primary" style="float: right;" icon="el-icon-edit" size="mini"
               @click="showEditDialog(scope.row.id)">编辑
-            </el-button>
-            <el-button type="danger" style="float: right;" icon="el-icon-delete" size="mini"
-              @click="removeById(scope.row.id)">删除
             </el-button>
           </template>
         </el-table-column>
