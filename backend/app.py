@@ -172,7 +172,8 @@ def add_cart():
     print(request.form)
     # id = request.form['id']
     s = DBSession()
-    id = request.form['id']
+    # print(request.form)
+    product_id = request.form['productId']
     checked = request.form['checked']
     picUrl = request.form['picUrl']
     title = request.form['title']
@@ -180,8 +181,9 @@ def add_cart():
     count = request.form['count']
     maxNum = request.form['maxNum']
     price = request.form['price']
-    new_cart_item = OmsCartItem()
-    s.add(new_product)
+    member_id = request.form['user_id']
+    new_cart_item = OmsCartItem(member_id=member_id,product_id=product_id,checked=checked,product_pic=picUrl,product_name=title,product_attr=spec,quantity=count,max_number=maxNum,price=price)
+    s.add(new_cart_item)
     s.commit()
     s.close()
     return jsonify({"code": "sucess", "res": ""})
@@ -233,6 +235,69 @@ def query_cart():
     res = {"code": 200, "res": res}
     return jsonify(res)
 
+
+import time
+
+@app.route("/orders",methods=['POST'])
+def add_orders():
+    # print(request.json)
+    s = DBSession()
+    
+    data = request.json
+    
+
+    member_id = data['address']['id']
+    order_sn = time.strftime("%y%m%d%H%M%S")+str(member_id)
+
+    order = {
+        "order_sn":order_sn,
+        "member_id":member_id,
+        "total_amount":data['totalPrice'],
+        "pay_amount":data['actualPrice'],
+        "feight_amount":data['expressPrice'],
+        "status":2,
+        "receiver_name":data['address']['name'],
+        "receiver_phone":data['address']['mobile']
+    }
+
+    newOrder = OmsOrder(order_sn=order_sn,
+        member_id=member_id,
+        total_amount=data['totalPrice'],
+        pay_amount=data['actualPrice'],
+        freight_amount=data['expressPrice'],
+        status=2,
+        receiver_name=data['address']['name'],receiver_phone=data['address']['mobile'])
+    s.add(newOrder)
+
+    order_item = [
+        {
+        "order_sn":order_sn,
+        "product_id":d['id'],
+        "product_pic":d['picUrl'],
+        "product_name":d['title'],
+        "product_price":d['price'],
+        "product_quantity":d['count'],
+        "product_attr":d['spec']
+        }
+        for d in data['productList']
+    ]
+
+    for item in order_item:
+        new_order_item = OmsOrderItem(
+        order_sn=order_sn,
+        product_id=item['product_id'],
+        product_pic=item['product_pic'],
+        product_name=item['product_name'],
+        product_price=item['product_price'],
+        product_quantity=item['product_quantity'],
+        product_attr=item['product_attr']
+        )
+        s.add(new_order_item)
+    
+    s.commit()
+    s.close()
+    res = {"code": 200, "res": ""}
+    return jsonify(res)
 
 @app.route("/get_product/<int:product_id>")
 def get_product(product_id):
@@ -356,7 +421,7 @@ def get_product(product_id):
         "count": 1  # 选择的商品数量
     }}
     res['product'] = {
-        "id": 0,
+        "id": 3,
         "picUrl": "https://img11.360buyimg.com/n1/s450x450_jfs/t1/62813/33/2131/584186/5d079803E03084b0d/2b4970456b7bf49f.png",  # 默认商品图片
         "promotion": 1,  # 促销活动 0无 1限时购 2领劵
         "gallery": [{
