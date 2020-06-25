@@ -6,7 +6,7 @@
         <img src="../assets/logo3.png" alt="">
         <span>电商后台管理系统</span>
       </div>
-      <el-button type="info">退出</el-button>
+      <el-button type="info" @click="logout">退出</el-button>
     </el-header>
     <!-- 页面主体区域 -->
     <el-container>
@@ -218,6 +218,10 @@ export default {
     saveNavState (activePath) {
       window.sessionStorage.setItem('activePath', activePath)
       this.activePath = activePath
+    },
+    logout () {
+      window.sessionStorage.clear()
+      this.$router.push('/login')
     }
   }
 }

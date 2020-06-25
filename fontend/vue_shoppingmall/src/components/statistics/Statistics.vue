@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     async getStatistics () {
-      const { data: res } = await this.$http.get('admin/statistics_info')
+      const { data: res } = await this.$http.get('admin/platform_statistics')
       console.log(res)
     }
   }
