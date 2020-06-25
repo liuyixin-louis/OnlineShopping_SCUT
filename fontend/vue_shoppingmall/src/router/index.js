@@ -20,7 +20,8 @@ import User_info from '../components/statistics/User_info.vue'
 import Order from '../components/orders/Order.vue'
 import Stock from '../components/goods/Stock.vue'
 import Attribute from '../components/goods/Attribute.vue'
-
+import Shoprank from '../components/statistics/Shoprank.vue'
+import Productrank from '../components/statistics/Productrank.vue'
 
 // 注册组件后即可使用
 // Vue.component('v-chart', ECharts)
@@ -45,7 +46,9 @@ export default new Router({
         { path: '/stock', component: Stock },
         { path: '/orders', component: Order },
         { path: '/user_info', component: User_info },
-        { path: '/statistics', component: Statistics }
+        { path: '/statistics', component: Statistics },
+        { path: '/shoprank', component: Shoprank },
+        { path: '/productrank', component: Productrank }
       ]
     }
 

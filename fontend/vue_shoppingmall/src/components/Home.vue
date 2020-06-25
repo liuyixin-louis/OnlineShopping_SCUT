@@ -135,8 +135,8 @@
               <!-- 文本 -->
               <span>数据统计</span>
             </template>
+
             <!-- 二级菜单 -->
-            
             <el-menu-item index="user_info" @click="saveNavState('/user_info')">
               <!-- 一级菜单模版区域 -->
               <template slot="title">
@@ -157,6 +157,27 @@
               </template>
             </el-menu-item>
 
+            <!-- 二级菜单 -->
+            <el-menu-item index="shoprank" @click="saveNavState('/shoprank')">
+              <!-- 一级菜单模版区域 -->
+              <template slot="title">
+                <!-- 图标 -->
+                <i class="el-icon-s-help"></i>
+                <!-- 文本 -->
+                <span>商家销量排名</span>
+              </template>
+            </el-menu-item>
+
+            <!-- 二级菜单 -->
+            <el-menu-item index="productrank" @click="saveNavState('/productrank')">
+              <!-- 一级菜单模版区域 -->
+              <template slot="title">
+                <!-- 图标 -->
+                <i class="el-icon-s-help"></i>
+                <!-- 文本 -->
+                <span>产品销量排名</span>
+              </template>
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>

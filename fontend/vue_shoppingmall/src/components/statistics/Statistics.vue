@@ -1,12 +1,12 @@
 <template>
-<ve-line :data="chartData"></ve-line>
+  <ve-line :data="chartData"></ve-line>
 </template>
 
 <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/index.min.js"></script>
 
 <script>
 export default {
-  data:function(){
+  data: function () {
     return {
       chartData: {
         columns: ['日期', '访问用户', '下单用户', '下单率'],
@@ -19,6 +19,16 @@ export default {
           { '日期': '1/6', '访问用户': 4593, '下单用户': 4293, '下单率': 0.78 }
         ]
       }
+    }  },
+  created () {
+    this.getStatistics()
+  },
+  methods: {
+    async getStatistics () {
+      const { data: res } = await this.$http.get('admin/statistics_info')
+      console.log(res)
+    }
   }
-}}
+
+}
 </script>
