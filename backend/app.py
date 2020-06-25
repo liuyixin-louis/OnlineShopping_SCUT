@@ -924,8 +924,7 @@ def getPlatformStatistics():
     res = [{"date":str(r.datetime.date()),"sale":r.tody_sale} for r in resa]
     s.close()
     return jsonify(res=res,code=200)
-
-
+    
 if __name__ == '__main__':
     app.debug = True
     app.run(host='localhost', port=5000)
