@@ -1,1 +1,0 @@
-/admin/platform_statistics
